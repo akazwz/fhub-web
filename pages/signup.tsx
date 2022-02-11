@@ -1,8 +1,8 @@
 import { NextPage } from 'next'
 import {
   Flex,
-  Link,
   Text,
+  Link,
   Image,
   Input,
   Stack,
@@ -10,12 +10,24 @@ import {
   VStack,
   HStack,
   Heading,
+  useToast,
   FormLabel,
   FormControl,
   useColorModeValue,
 } from '@chakra-ui/react'
 
 const SignUp: NextPage = () => {
+  const toast = useToast()
+
+  const handleSignUpClick = () => {
+    toast({
+      title: 'Sign Up Success',
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
+
   return (
     <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
       <Flex
@@ -53,7 +65,11 @@ const SignUp: NextPage = () => {
             <Input type="password"/>
           </FormControl>
           <Stack spacing={6}>
-            <Button colorScheme={'blue'} variant={'solid'}>
+            <Button
+              colorScheme={'blue'}
+              variant={'solid'}
+              onClick={handleSignUpClick}
+            >
               Sign up
             </Button>
             <HStack spacing="1" justify="center">

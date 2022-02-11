@@ -15,8 +15,12 @@ import {
   FormControl,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useRecoilState } from 'recoil'
+import { isRememberState } from '../src/state/is_remember'
 
 const Login: NextPage = () => {
+  const [isRemember, setIsRemember] = useRecoilState(isRememberState)
+
   return (
     <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
       <Flex
@@ -58,7 +62,12 @@ const Login: NextPage = () => {
               direction={{ base: 'column', sm: 'row' }}
               align={'start'}
               justify={'space-between'}>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox
+                isChecked={isRemember}
+                onChange={() => {setIsRemember(!isRemember)}}
+              >
+                Remember me
+              </Checkbox>
               <Link href={'/password_reset'} color={'blue.500'}>Forgot password?</Link>
             </Stack>
             <Button colorScheme={'blue'} variant={'solid'}>
