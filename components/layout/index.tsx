@@ -14,6 +14,7 @@ interface IProps {
 
 export const Layout = ({ children }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       {/* md sidebar */}

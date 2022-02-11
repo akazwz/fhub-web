@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import { NextPage } from 'next'
 import {
   Flex,
@@ -13,13 +15,77 @@ import {
   Checkbox,
   FormLabel,
   FormControl,
-  useColorModeValue,
+  useColorModeValue, useToast,
 } from '@chakra-ui/react'
 import { useRecoilState } from 'recoil'
-import { isRememberState } from '../src/state/is_remember'
+import { SignInByUsernamePwdAPI } from '../src/api/user'
+import { isRememberState } from '../src/state/user'
+import { useUser } from '../src/hooks/useUser'
 
 const Login: NextPage = () => {
   const [isRemember, setIsRemember] = useRecoilState(isRememberState)
+
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const toast = useToast()
+  const router = useRouter()
+  const { setStateLogin } = useUser()
+
+  const handleSignInClick = () => {
+    /* button loading */
+    setLoading(true)
+    SignInByUsernamePwdAPI({ username: username, password: password })
+      .then((res) => {
+        /* judge status code sign in error */
+        if (res.status !== 201) {
+          toast({
+            title: 'Sign In Error',
+            status: 'error',
+            position: 'top',
+            duration: 3000,
+            isClosable: true,
+          })
+          /* button loading */
+          setLoading(false)
+          return
+        }
+        /* sign in success */
+
+        res.json().then((resData) => {
+          const { data } = resData
+          const { token } = data
+          setStateLogin(token)
+          toast({
+            title: 'Sign In Success, Redirecting to dashboard.',
+            status: 'success',
+            position: 'top',
+            duration: 3000,
+            isClosable: true,
+          })
+
+          /* button loading */
+          setLoading(false)
+
+          /* redirect to dashboard */
+          setTimeout(() => {
+            router.push('/', undefined, { locale: router.locale }).then()
+          }, 3000)
+        })
+
+      })
+      .catch((err) => {
+        /* button loading */
+        setLoading(false)
+        toast({
+          title: err.toString(),
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+  }
 
   return (
     <Stack minH={'100vh'} direction={{ base: 'column-reverse', md: 'row' }}>
@@ -51,11 +117,11 @@ const Login: NextPage = () => {
           </Heading>
           <FormControl id="username">
             <FormLabel>Username</FormLabel>
-            <Input type="username"/>
+            <Input type="username" onChange={(e) => {setUsername(e.target.value)}}/>
           </FormControl>
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
-            <Input type="password"/>
+            <Input type="password" onChange={(e) => {setPassword(e.target.value)}}/>
           </FormControl>
           <Stack spacing={6}>
             <Stack
@@ -64,13 +130,26 @@ const Login: NextPage = () => {
               justify={'space-between'}>
               <Checkbox
                 isChecked={isRemember}
-                onChange={() => {setIsRemember(!isRemember)}}
+                onChange={() => {
+                  setIsRemember(!isRemember)
+                  /* store in local storage */
+                  if (isRemember) {
+                    localStorage.setItem('isRemember', 'yes')
+                  } else {
+                    localStorage.setItem('isRemember', 'no')
+                  }
+                }}
               >
                 Remember me
               </Checkbox>
               <Link href={'/password_reset'} color={'blue.500'}>Forgot password?</Link>
             </Stack>
-            <Button colorScheme={'blue'} variant={'solid'}>
+            <Button
+              colorScheme={'blue'}
+              variant={'solid'}
+              onClick={handleSignInClick}
+              isLoading={loading}
+            >
               Sign in
             </Button>
             <HStack spacing="1" justify="center">
