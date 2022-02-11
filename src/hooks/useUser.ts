@@ -1,57 +1,53 @@
 import { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { isAuthState, isRememberState, tokenState } from '../state/user'
+import { useAuth } from './useAuth'
+import { GetUserProfileAPI } from '../api/user'
 
-export function useUser () {
-  const [isReady, setIsReady] = useState<boolean>(false)
-  const [token, setToken] = useRecoilState(tokenState)
-  const [isRemember, setIsRemember] = useRecoilState(isRememberState)
-  const isAuth = useRecoilValue(isAuthState)
+interface IUser {
+  username: string,
+  email: string,
+  phone: string,
+  gender: string,
+  role: string,
+  avatar: string,
+  createAt: string,
+}
 
-  useEffect(() => {
-    const isRemember = localStorage.getItem('isRemember')
-    if (isRemember === 'yes') {
-      setIsRemember(true)
-    }
-
-    let tokenStore
-    if (isRemember === 'yes') {
-      tokenStore = localStorage.getItem('f-token')
-    } else {
-      tokenStore = sessionStorage.getItem('f-token')
-    }
-    setToken(tokenStore)
-    setIsReady(true)
-  }, [setIsRemember, setToken])
+export const useUser = () => {
+  const [user, setUser] = useState<IUser | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [isError, setIsError] = useState<boolean>(false)
+  const { token } = useAuth()
 
   useEffect(() => {
-    if (!isAuth) return
-  }, [isAuth])
-
-  const setStateLogout = () => {
-    if (isRemember) {
-      localStorage.removeItem('f-token')
-    } else {
-      sessionStorage.removeItem('f-token')
-    }
-    setToken(null)
-  }
-
-  const setStateLogin = (token: string) => {
-    if (isRemember) {
-      localStorage.setItem('f-token', token)
-    } else {
-      sessionStorage.setItem('f-token', token)
-    }
-    setToken(token)
-  }
+    if (!token) return
+    GetUserProfileAPI(token)
+      .then((res) => {
+        if (res.status !== 200) {
+          return
+        }
+        res.json().then((resData) => {
+          const { data } = resData
+          const { username, email, phone, gender, role, avatar, created_at } = data
+          setUser({
+            username: username,
+            email: email,
+            phone: phone,
+            gender: gender,
+            role: role,
+            avatar: avatar,
+            createAt: created_at,
+          })
+          setLoading(false)
+        })
+      })
+      .catch(() => {
+        setIsError(true)
+      })
+  }, [token])
 
   return {
-    isReady,
-    isAuth,
-    isRemember,
-    token,
-    setStateLogin,
-    setStateLogout,
+    user,
+    isLoading: loading,
+    isError
   }
 }

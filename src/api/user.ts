@@ -20,3 +20,13 @@ export const SignInByUsernamePwdAPI = (user: IUsernamePwd) => {
     body: JSON.stringify(user)
   })
 }
+
+/* sign in */
+export const GetUserProfileAPI = (token: string) => {
+  return fetch(`${baseUrl}/v1/user/profile`, {
+    method: 'POST',
+    headers: {
+      token: token
+    }
+  })
+}

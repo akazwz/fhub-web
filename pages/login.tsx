@@ -20,7 +20,7 @@ import {
 import { useRecoilState } from 'recoil'
 import { SignInByUsernamePwdAPI } from '../src/api/user'
 import { isRememberState } from '../src/state/user'
-import { useUser } from '../src/hooks/useUser'
+import { useAuth } from '../src/hooks/useAuth'
 
 const Login: NextPage = () => {
   const [isRemember, setIsRemember] = useRecoilState(isRememberState)
@@ -31,7 +31,7 @@ const Login: NextPage = () => {
 
   const toast = useToast()
   const router = useRouter()
-  const { setStateLogin } = useUser()
+  const { setStateLogin } = useAuth()
 
   const handleSignInClick = () => {
     /* button loading */
@@ -134,9 +134,9 @@ const Login: NextPage = () => {
                   setIsRemember(!isRemember)
                   /* store in local storage */
                   if (isRemember) {
-                    localStorage.setItem('isRemember', 'yes')
-                  } else {
                     localStorage.setItem('isRemember', 'no')
+                  } else {
+                    localStorage.setItem('isRemember', 'yes')
                   }
                 }}
               >
