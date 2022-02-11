@@ -1,12 +1,13 @@
 import { ReactText } from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Flex,
   Link,
-  FlexProps, useColorModeValue,
+  useColorModeValue,
+  FlexProps,
 } from '@chakra-ui/react'
 import IconPark from '@icon-park/react/lib/all'
-import { useRouter } from 'next/router'
 
 interface LinkItemProps {
   name: string

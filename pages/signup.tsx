@@ -12,10 +12,10 @@ import {
   VStack,
   HStack,
   Heading,
-  useToast,
   FormLabel,
   FormControl,
   useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { SignUpByUsernamePwdAPI } from '../src/api/user'
 

@@ -1,19 +1,23 @@
 import {
-  HStack,
-  IconButton,
   Text,
   Flex,
-  FlexProps,
+  HStack,
+  IconButton,
   useColorModeValue,
+  FlexProps,
 } from '@chakra-ui/react'
 import { CloudStorage, HamburgerButton, } from '@icon-park/react'
 import { ColorModeToggle } from './ColorModeToggle'
+import SettingDrawer from './SettingDrawer'
+import { ProfileMenu } from './ProfileMenu'
+import { IUser } from '../../../src/hooks/useUser'
 
 interface IProps extends FlexProps {
   onOpen: () => void;
+  user: IUser
 }
 
-export const Header = ({ onOpen, ...rest }: IProps) => {
+export const Header = ({ onOpen, user, ...rest }: IProps) => {
   return (
     <Flex
       transition="1s ease"
@@ -53,9 +57,18 @@ export const Header = ({ onOpen, ...rest }: IProps) => {
           FHub
         </Text>
       </HStack>
-
       <HStack spacing={{ base: 1, md: 6 }}>
         <ColorModeToggle/>
+        <SettingDrawer/>
+        <ProfileMenu
+          username={user.username}
+          email={user.email}
+          phone={user.phone}
+          gender={user.gender}
+          role={user.role}
+          avatar={user.avatar}
+          createAt={user.createAt}
+        />
       </HStack>
     </Flex>
   )

@@ -1,4 +1,8 @@
-import { IconButton, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import {
+  IconButton,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { Sun, Moon } from '@icon-park/react'
 
 export const ColorModeToggle = () => {

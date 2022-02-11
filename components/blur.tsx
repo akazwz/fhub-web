@@ -1,6 +1,6 @@
 import {
-  IconProps,
   Icon,
+  IconProps,
 } from '@chakra-ui/react'
 
 export const Blur = (props: IconProps) => {

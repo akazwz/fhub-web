@@ -1,12 +1,11 @@
 import {
-
   Box,
   Flex,
-  HStack,
   Text,
+  HStack,
   CloseButton,
-  BoxProps,
   useColorModeValue,
+  BoxProps,
 } from '@chakra-ui/react'
 import { CloudStorage } from '@icon-park/react'
 import { NavItems } from './NavItems'

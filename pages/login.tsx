@@ -15,7 +15,8 @@ import {
   Checkbox,
   FormLabel,
   FormControl,
-  useColorModeValue, useToast,
+  useColorModeValue,
+  useToast,
 } from '@chakra-ui/react'
 import { useRecoilState } from 'recoil'
 import { SignInByUsernamePwdAPI } from '../src/api/user'
