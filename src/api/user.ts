@@ -24,7 +24,7 @@ export const SignInByUsernamePwdAPI = (user: IUsernamePwd) => {
 /* get user profile by token */
 export const GetUserProfileAPI = (token: string) => {
   return fetch(`${baseUrl}/v1/user/profile`, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       token: token
     }

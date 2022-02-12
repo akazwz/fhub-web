@@ -10,6 +10,15 @@ export interface IUploadFile {
   cid: string,
 }
 
+export const GetUploadToken = (token: string, file: IUploadFile) => {
+  return fetch(`${baseUrl}/v1/file/uptoken`, {
+    method: 'GET',
+    headers: {
+      token: token
+    },
+  })
+}
+
 export const UploadFileToServerApi = (token: string, file: IUploadFile) => {
   return fetch(`${baseUrl}/v1/user/profile`, {
     method: 'POST',
