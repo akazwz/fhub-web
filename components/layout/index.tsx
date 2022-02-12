@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   DrawerContent,
@@ -10,7 +11,6 @@ import { Header } from './header'
 import { Sidebar } from './sidebar'
 import { useUser } from '../../src/hooks/useUser'
 import { LoadingPage } from '../loading'
-import { useRouter } from 'next/router'
 
 interface IProps {
   children: ReactNode
@@ -21,17 +21,18 @@ export const Layout = ({ children }: IProps) => {
   const bg = useColorModeValue('gray.100', 'gray.900')
 
   const router = useRouter()
-
-  const { user, isLoading, isError } = useUser()
+  const { user, isError, isLoading } = useUser()
 
   /* 获取用户信息失败， 重新登录 */
   if (isError) {
-    router.push('/login', undefined, { locale: router.locale }).then()
+    setTimeout(() => {
+      router.push('/login', undefined, { locale: router.locale }).then()
+    }, 3000)
   }
 
-  if (isLoading) {
+  /*if (isLoading) {
     return <LoadingPage/>
-  }
+  }*/
 
   return (
     <Box minH="100vh" bg={bg}>
@@ -53,7 +54,7 @@ export const Layout = ({ children }: IProps) => {
       </Drawer>
       <Header onOpen={onOpen} user={user}/>
       <Box minH="100%" ml={{ base: 0, md: 60 }} p="4">
-        {children}
+        {isLoading ? <LoadingPage/> : children}
       </Box>
     </Box>
   )
