@@ -37,6 +37,7 @@ export const useUser = () => {
     GetUserProfileAPI(token)
       .then((res) => {
         if (res.status !== 200) {
+          setIsError(true)
           return
         }
         res.json().then((resData) => {
