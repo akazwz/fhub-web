@@ -23,16 +23,19 @@ const File: NextPage = () => {
     { file: true, fileName: 'test.png', fileSize: 2342 },
     { file: false, fileName: 'test', fileSize: 3004 },
   ]
-
+  
   const [pos, setPos] = useState<[number, number]>([0, 0])
-
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     setPos([e.pageX, e.pageY])
     onOpen()
   }
+  
+  const handleShow = () => {
+    
+  }
+  
   return (
     <Layout>
       <FileOptionBar/>

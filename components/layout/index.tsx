@@ -21,10 +21,10 @@ export const Layout = ({ children }: IProps) => {
   const bg = useColorModeValue('gray.100', 'gray.900')
 
   const router = useRouter()
-  const { user, isError, isUserLoading } = useUser()
+  const { user, isUserError, isUserLoading } = useUser()
 
   /* 获取用户信息失败， 重新登录 */
-  if (isError) {
+  if (isUserError) {
     setTimeout(() => {
       router.push('/login', undefined, { locale: router.locale }).then()
     }, 3000)
