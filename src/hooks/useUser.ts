@@ -22,13 +22,13 @@ export const useUser = () => {
     avatar: '',
     createAt: '',
   })
-  const [loading, setLoading] = useState<boolean>(true)
-  const [isError, setIsError] = useState<boolean>(false)
-  const { token, isLoading, } = useAuth()
+  const [isUserLoading, setLoading] = useState<boolean>(true)
+  const [isUserError, setIsError] = useState<boolean>(false)
+  const { token, isAuthLoading, } = useAuth()
 
   useEffect(() => {
     /* 获取 token 中 */
-    if (isLoading) return
+    if (isAuthLoading) return
     /* token 为空 */
     if (!token) {
       setIsError(true)
@@ -69,11 +69,11 @@ export const useUser = () => {
       .catch(() => {
         setIsError(true)
       })
-  }, [isLoading, token])
+  }, [isAuthLoading, token])
 
   return {
     user,
-    isLoading: loading,
-    isError
+    isUserLoading,
+    isUserError,
   }
 }

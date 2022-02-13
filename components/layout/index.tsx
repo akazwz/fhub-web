@@ -21,7 +21,7 @@ export const Layout = ({ children }: IProps) => {
   const bg = useColorModeValue('gray.100', 'gray.900')
 
   const router = useRouter()
-  const { user, isError, isLoading } = useUser()
+  const { user, isError, isUserLoading } = useUser()
 
   /* 获取用户信息失败， 重新登录 */
   if (isError) {
@@ -54,7 +54,7 @@ export const Layout = ({ children }: IProps) => {
       </Drawer>
       <Header onOpen={onOpen} user={user}/>
       <Box minH="100%" ml={{ base: 0, md: 60 }} p="4">
-        {isLoading ? <LoadingPage/> : children}
+        {isUserLoading ? <LoadingPage/> : children}
       </Box>
     </Box>
   )

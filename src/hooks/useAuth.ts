@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { isAuthState, isRememberState, tokenState } from '../state/user'
 
 export function useAuth () {
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isAuthLoading, setIsLoading] = useState<boolean>(true)
   const [token, setToken] = useRecoilState(tokenState)
   const [isRemember, setIsRemember] = useRecoilState(isRememberState)
   const isAuth = useRecoilValue(isAuthState)
@@ -47,7 +47,7 @@ export function useAuth () {
   }
 
   return {
-    isLoading,
+    isAuthLoading,
     isAuth,
     isRemember,
     token,
