@@ -10,7 +10,7 @@ export interface IUploadFile {
   cid: string,
 }
 
-export const GetUploadToken = (token: string, file: IUploadFile) => {
+export const GetUploadToken = (token: string) => {
   return fetch(`${baseUrl}/v1/file/uptoken`, {
     method: 'GET',
     headers: {

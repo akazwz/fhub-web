@@ -14,6 +14,7 @@ import { Layout } from '../components/layout'
 import FileCard, { ICloudFile } from '../components/file/FileCard'
 import { FileOptionBar } from '../components/file/FileOptionBar'
 import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
+import { MobileFileOption } from '../components/file/MobileFileOption'
 
 const File: NextPage = () => {
   const files: ICloudFile[] = [
@@ -23,7 +24,7 @@ const File: NextPage = () => {
     { file: true, fileName: 'test.png', fileSize: 2342 },
     { file: false, fileName: 'test', fileSize: 3004 },
   ]
-  
+
   const [pos, setPos] = useState<[number, number]>([0, 0])
   const { isOpen, onOpen, onClose } = useDisclosure()
   const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
@@ -31,11 +32,7 @@ const File: NextPage = () => {
     setPos([e.pageX, e.pageY])
     onOpen()
   }
-  
-  const handleShow = () => {
-    
-  }
-  
+
   return (
     <Layout>
       <FileOptionBar/>
@@ -52,6 +49,7 @@ const File: NextPage = () => {
           ))}
         </Grid>
       </Box>
+      <MobileFileOption/>
       {/* context menu */}
       <Menu isOpen={isOpen} offset={pos} onClose={onClose}>
         <MenuButton position={'absolute'} top={0} left={0}/>
