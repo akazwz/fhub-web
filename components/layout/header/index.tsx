@@ -4,9 +4,9 @@ import {
   HStack,
   IconButton,
   useColorModeValue,
-  FlexProps, Button, Spacer,
+  FlexProps,
 } from '@chakra-ui/react'
-import { CloudStorage, FolderPlus, HamburgerButton, Refresh, UploadOne, } from '@icon-park/react'
+import { CloudStorage, HamburgerButton, } from '@icon-park/react'
 import { ColorModeToggle } from './ColorModeToggle'
 import SettingDrawer from './SettingDrawer'
 import { ProfileMenu } from './ProfileMenu'
@@ -38,29 +38,7 @@ export const Header = ({ onOpen, user, ...rest }: IProps) => {
         variant="outline"
         icon={<HamburgerButton/>}
       />
-      <HStack
-        p={3}
-        spacing={7}
-        display={{ base: 'none', md: 'flex' }}
-      >
-        <Button
-          leftIcon={<UploadOne/>}
-          colorScheme={'blue'}
-        >
-          Upload
-        </Button>
-        <Button
-          leftIcon={<FolderPlus/>}
-        >
-          New Folder
-        </Button>
-        <IconButton
-          aria-label={''}
-          icon={<Refresh/>}
-          rounded="full"
-        />
-      </HStack>
-      <Spacer/>
+
       <HStack
         spacing={3}
         display={{ base: 'flex', md: 'none' }}
@@ -80,7 +58,6 @@ export const Header = ({ onOpen, user, ...rest }: IProps) => {
           FHub
         </Text>
       </HStack>
-      <Spacer/>
       <HStack spacing={{ base: 1, md: 6 }}>
         <ColorModeToggle/>
         <SettingDrawer/>
