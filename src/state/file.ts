@@ -5,3 +5,8 @@ export const prefixDirState = atom<string>({
   key: 'prefixDir',
   default: '0/',
 })
+
+export const shouldGetFileListState = atom<number>({
+  key: 'shouldGetFileListState',
+  default: 0,
+})

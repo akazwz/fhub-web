@@ -7,6 +7,7 @@ import { useAuth } from '../../src/hooks/useAuth'
 import { useQiniuUpload } from '../../src/hooks/useQiniuUpload'
 import { useRecoilValue } from 'recoil'
 import { prefixDirState } from '../../src/state/file'
+import { useFileList } from '../../src/hooks/useFileList'
 
 export const FileOptionBar = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
@@ -15,6 +16,8 @@ export const FileOptionBar = () => {
   const [uptoken, setUptoken] = useState<string | null>(null)
 
   const prefix = useRecoilValue(prefixDirState)
+
+  const { refresh } = useFileList()
 
   const handleFileInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
@@ -65,7 +68,7 @@ export const FileOptionBar = () => {
         alert('error')
         return
       }
-      alert('success')
+      refresh()
     })
   }, [Qkey, chosenFile, sha256, prefix, token])
 
@@ -101,6 +104,7 @@ export const FileOptionBar = () => {
         aria-label={''}
         icon={<Refresh/>}
         rounded="full"
+        onClick={refresh}
       />
       <Button
         disabled={!chosenFile || !uptoken || !sha256}

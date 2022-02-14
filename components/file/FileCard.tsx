@@ -58,7 +58,7 @@ const isDocFile = (fileName: string): boolean => {
 }
 
 const isExcelFile = (fileName: string): boolean => {
-  const excelExtensions = ['xls', 'xlsx']
+  const excelExtensions = ['xls', 'xlsx', 'csv']
   const ext = getFileExtension(fileName).toLowerCase()
   return excelExtensions.indexOf(ext) !== -1
 }
@@ -110,7 +110,7 @@ const fileName = (fileName: string) => {
     showName =
       fileName.slice(0, 3)
       + '...'
-      + getFileName(fileName).slice(-3)
+      + getFileName(fileName).slice(-2)
       + '.'
       + getFileExtension(fileName).slice(0, 5)
   }

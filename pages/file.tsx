@@ -18,11 +18,12 @@ import { MobileFileOption } from '../components/file/MobileFileOption'
 import { useAuth } from '../src/hooks/useAuth'
 import { GetFileList } from '../src/api/file'
 import { useRecoilValue } from 'recoil'
-import { prefixDirState } from '../src/state/file'
+import { prefixDirState, shouldGetFileListState } from '../src/state/file'
 
 const File: NextPage = () => {
   const { token } = useAuth()
   const prefixDir = useRecoilValue(prefixDirState)
+  const shouldGetFileList = useRecoilValue(shouldGetFileListState)
 
   const [fileList, setFileList] = useState<IFileListItem[]>([])
 
@@ -39,7 +40,7 @@ const File: NextPage = () => {
           setFileList(data)
         })
       })
-  }, [prefixDir, token])
+  }, [prefixDir, token, shouldGetFileList])
 
   const [pos, setPos] = useState<[number, number]>([0, 0])
   const { isOpen, onOpen, onClose } = useDisclosure()
