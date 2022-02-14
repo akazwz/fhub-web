@@ -28,3 +28,12 @@ export const UploadFileToServerApi = (token: string, file: IUploadFile) => {
     body: JSON.stringify(file)
   })
 }
+
+export const GetFileList = (token: string, prefixDir: string) => {
+  return fetch(`${baseUrl}/v1/file?prefix_dir=${prefixDir}`, {
+    method: 'GET',
+    headers: {
+      token: token
+    },
+  })
+}

@@ -3,7 +3,7 @@ import {
   Box,
   Text,
   VStack,
-  useColorModeValue,
+  useColorModeValue, Tooltip,
 } from '@chakra-ui/react'
 import { VideoIcon } from './icons/VideoIcon'
 import { MusicIcon } from './icons/MusicIcon'
@@ -16,10 +16,16 @@ import { TextIcon } from './icons/TextIcon'
 import { OtherIcon } from './icons/OtherIcon'
 import { FolderIcon } from './icons/FolderIcon'
 
-export interface ICloudFile {
-  fileName: string,
-  fileSize: number,
+export interface IFileListItem {
+  file_name: string,
+  size: number,
   file: boolean,
+  sha256: string,
+}
+
+const getFileName = (filePath: string): string => {
+  const index = filePath.lastIndexOf('.')
+  return filePath.slice(0, index)
 }
 
 const getFileExtension = (fileName: string): string => {
@@ -99,10 +105,21 @@ const fileIcon = (fileName: string): ReactElement => {
 }
 
 const fileName = (fileName: string) => {
+  let showName = fileName
+  if (fileName.length > 5) {
+    showName =
+      fileName.slice(0, 3)
+      + '...'
+      + getFileName(fileName).slice(-3)
+      + '.'
+      + getFileExtension(fileName).slice(0, 5)
+  }
   return (
-    <Text fontSize={'sm'}>
-      {fileName}
-    </Text>
+    <Tooltip label={fileName}>
+      <Text fontSize={'sm'}>
+        {showName}
+      </Text>
+    </Tooltip>
   )
 }
 
@@ -139,7 +156,7 @@ const fileSize = (size: number) => {
   )
 }
 
-const FileCard = (cloudFile: ICloudFile) => {
+const FileCard = (cloudFile: IFileListItem) => {
   return (
     <Box
       w="100px"
@@ -149,14 +166,14 @@ const FileCard = (cloudFile: ICloudFile) => {
     >
       {cloudFile.file
         ? <VStack spacing={1}>
-          {fileIcon(cloudFile.fileName)}
-          {fileName(cloudFile.fileName)}
-          {fileSize(cloudFile.fileSize)}
+          {fileIcon(cloudFile.file_name)}
+          {fileName(cloudFile.file_name)}
+          {fileSize(cloudFile.size)}
         </VStack>
         :
         <VStack spacing={3}>
           <FolderIcon fontSize={55}/>
-          {folderName(cloudFile.fileName)}
+          {folderName(cloudFile.file_name)}
         </VStack>
       }
     </Box>

@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import {
   Box,
@@ -11,19 +11,35 @@ import {
 } from '@chakra-ui/react'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import { Layout } from '../components/layout'
-import FileCard, { ICloudFile } from '../components/file/FileCard'
+import FileCard, { IFileListItem } from '../components/file/FileCard'
 import { FileOptionBar } from '../components/file/FileOptionBar'
 import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
+import { useAuth } from '../src/hooks/useAuth'
+import { GetFileList } from '../src/api/file'
+import { useRecoilValue } from 'recoil'
+import { prefixDirState } from '../src/state/file'
 
 const File: NextPage = () => {
-  const files: ICloudFile[] = [
-    { file: true, fileName: 'test.txt', fileSize: 3004 },
-    { file: true, fileName: 'test.doc', fileSize: 30040 },
-    { file: true, fileName: 'test.mp4', fileSize: 324234 },
-    { file: true, fileName: 'test.png', fileSize: 2342 },
-    { file: false, fileName: 'test', fileSize: 3004 },
-  ]
+  const { token } = useAuth()
+  const prefixDir = useRecoilValue(prefixDirState)
+
+  const [fileList, setFileList] = useState<IFileListItem[]>([])
+
+  useEffect(() => {
+    if (!token) return
+    GetFileList(token, prefixDir)
+      .then((res) => {
+        if (res.status !== 200) {
+          alert('error')
+          return
+        }
+        res.json().then((resData) => {
+          const { data } = resData
+          setFileList(data)
+        })
+      })
+  }, [prefixDir, token])
 
   const [pos, setPos] = useState<[number, number]>([0, 0])
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,8 +60,14 @@ const File: NextPage = () => {
           gap="3"
           padding="3"
         >
-          {files.map((file, index) => (
-            <FileCard key={index} fileName={file.fileName} fileSize={file.fileSize} file={file.file}/>
+          {fileList.map((file, index) => (
+            <FileCard
+              key={file.sha256}
+              file_name={file.file_name}
+              size={file.size}
+              file={file.file}
+              sha256={file.sha256}
+            />
           ))}
         </Grid>
       </Box>
