@@ -25,7 +25,7 @@ export const FileOptionBar = () => {
 
   const { token, isAuthLoading } = useAuth()
   const { startUpload, uploadState, uploadError, Qkey } = useQiniuUpload(chosenFile, uptoken)
-  const { isHashLoading, isHashError, hash } = useHashFile(chosenFile)
+  const { isHashLoading, isHashError, hash, timeSpend } = useHashFile(chosenFile)
 
   useEffect(() => {
     if (!hash) return
@@ -72,7 +72,7 @@ export const FileOptionBar = () => {
         alert('error')
       }
       res.json().then((resData) => {
-        const {data} = resData
+        const { data } = resData
         console.log(data)
       })
     })
@@ -111,6 +111,9 @@ export const FileOptionBar = () => {
         icon={<Refresh/>}
         rounded="full"
       />
+      <Text>
+        {timeSpend}
+      </Text>
       <Text>
         {hash}
       </Text>
