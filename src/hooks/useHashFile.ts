@@ -1,7 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import CryptoJs from 'crypto-js'
 import encHex from 'crypto-js/enc-hex'
-import type WordArray from 'crypto-js/lib-typedarrays'
+
+export interface Encoder {
+  stringify (wordArray: WordArray): string;
+
+  parse (str: string): WordArray;
+}
+
+export interface WordArray {
+  words: number[];
+  sigBytes: number;
+
+  toString (encoder?: Encoder): string;
+
+  concat (wordArray: WordArray): this;
+
+  clamp (): void;
+
+  clone (): WordArray;
+}
 
 export interface Hasher {
   reset (): void;
@@ -11,7 +29,7 @@ export interface Hasher {
   finalize (messageUpdate?: WordArray | string): WordArray;
 }
 
-interface IUseHashFileReturn {
+export interface IUseHashFileReturn {
   isHashLoading: boolean,
   isHashError: boolean,
   sha256: string | null,
@@ -27,7 +45,7 @@ interface IUseHashFileReturn {
  * @param chunkSizeCustom   分块大小 默认为 10M
  * @return IUseHashFileReturn
  */
-export const useHashFile = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256', chunkSizeCustom?: number) : IUseHashFileReturn => {
+export const useHashFile = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256', chunkSizeCustom?: number): IUseHashFileReturn => {
   const startTimeRef = useRef<number | null>(null)
   const [isHashLoading, setIsHashLoading] = useState<boolean>(true)
   const [isHashError, setIsHashError] = useState<boolean>(false)

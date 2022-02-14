@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { Button, HStack, IconButton, Text } from '@chakra-ui/react'
+import { Button, HStack, IconButton } from '@chakra-ui/react'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
-import { GetUploadToken, IUploadFile, UploadFileToServerApi } from '../../src/api/file'
+import { useFileHashCode } from 'use-hashcode'
+import { GetUploadToken, UploadFileToServerApi } from '../../src/api/file'
 import { useAuth } from '../../src/hooks/useAuth'
-import { UploadStatus, useQiniuUpload } from '../../src/hooks/useQiniuUpload'
-import { useHashFile } from '../../src/hooks/useHashFile'
+import { useQiniuUpload } from '../../src/hooks/useQiniuUpload'
 import { useRecoilValue } from 'recoil'
 import { prefixDirState } from '../../src/state/file'
 
@@ -18,17 +18,18 @@ export const FileOptionBar = () => {
 
   const handleFileInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return
-    /* single file */
+    /* 单个文件 */
     const file = event.target.files[0]
     setChosenFile(file)
   }
 
-  const { token, isAuthLoading } = useAuth()
-  const { startUpload, uploadState, uploadError, Qkey } = useQiniuUpload(chosenFile, uptoken)
-  const { isHashLoading, isHashError, hash, timeSpend } = useHashFile(chosenFile)
+  const { token } = useAuth()
+  const { startUpload, Qkey } = useQiniuUpload(chosenFile, uptoken)
+
+  const { sha256 } = useFileHashCode(chosenFile)
 
   useEffect(() => {
-    if (!hash) return
+    if (!sha256) return
     /* 获取上传凭证 */
     if (!token) return
     GetUploadToken(token).then((res) => {
@@ -42,19 +43,11 @@ export const FileOptionBar = () => {
         setUptoken(token)
       })
     })
-  }, [hash, token])
+  }, [sha256, token])
 
-  /*useEffect(() => {
-    if (!chosenFile) return
-    if (!hash) return
-    if (!uptoken) return
-    /!* 开始上传 *!/
-    startUpload()
-  }, [chosenFile, hash, uptoken])
-*/
   useEffect(() => {
     if (!Qkey) return
-    if (!hash) return
+    if (!sha256) return
     if (!token) return
     if (!chosenFile) return
 
@@ -65,18 +58,16 @@ export const FileOptionBar = () => {
       filename: chosenFile.name,
       prefix_dir: prefix,
       qkey: Qkey,
-      sha256: hash,
+      sha256: sha256,
       size: chosenFile.size,
     }).then((res) => {
       if (res.status !== 201) {
         alert('error')
+        return
       }
-      res.json().then((resData) => {
-        const { data } = resData
-        console.log(data)
-      })
+      alert('success')
     })
-  }, [Qkey, chosenFile, hash, prefix, token])
+  }, [Qkey, chosenFile, sha256, prefix, token])
 
   const handleUploadClick = () => {
     fileInputRef.current?.click()
@@ -111,14 +102,8 @@ export const FileOptionBar = () => {
         icon={<Refresh/>}
         rounded="full"
       />
-      <Text>
-        {timeSpend}
-      </Text>
-      <Text>
-        {hash}
-      </Text>
       <Button
-        disabled={!chosenFile || !uptoken}
+        disabled={!chosenFile || !uptoken || !sha256}
         onClick={startUpload}
       >
         Start

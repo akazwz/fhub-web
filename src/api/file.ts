@@ -20,7 +20,7 @@ export const GetUploadToken = (token: string) => {
 }
 
 export const UploadFileToServerApi = (token: string, file: IUploadFile) => {
-  return fetch(`${baseUrl}/v1/user/profile`, {
+  return fetch(`${baseUrl}/v1/file`, {
     method: 'POST',
     headers: {
       token: token
