@@ -8,7 +8,16 @@ export interface Hasher {
 
   update (messageUpdate: WordArray | string): this;
 
-  finalize (messaegUpdate?: WordArray | string): WordArray;
+  finalize (messageUpdate?: WordArray | string): WordArray;
+}
+
+interface IUseHashFileReturn {
+  isHashLoading: boolean,
+  isHashError: boolean,
+  sha256: string | null,
+  sha1: string | null,
+  md5: string | null,
+  timeSpend: number | null,
 }
 
 /**
@@ -16,8 +25,9 @@ export interface Hasher {
  * @param file 需要计算的文件
  * @param hashAlgo hash 计算的算法 'md5' |'sha1'| 'sha256'  默认为 sha256
  * @param chunkSizeCustom   分块大小 默认为 10M
+ * @return IUseHashFileReturn
  */
-export const useHashFile = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256', chunkSizeCustom?: number) => {
+export const useHashFile = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256', chunkSizeCustom?: number) : IUseHashFileReturn => {
   const startTimeRef = useRef<number | null>(null)
   const [isHashLoading, setIsHashLoading] = useState<boolean>(true)
   const [isHashError, setIsHashError] = useState<boolean>(false)
