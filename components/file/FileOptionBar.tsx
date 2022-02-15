@@ -1,11 +1,12 @@
 import {
   HStack,
-  IconButton,
+  IconButton, Progress, Stack,
 } from '@chakra-ui/react'
 import { Refresh } from '@icon-park/react'
 import { useFileList } from '../../src/hooks/useFileList'
 import { CreateFolderModal } from './CreateFolderModal'
 import { UploadFileModal } from './UploadFileModal'
+import { UploadFileProgress } from './UploadFileProgress'
 
 export const FileOptionBar = () => {
   const { refresh } = useFileList()
@@ -23,6 +24,7 @@ export const FileOptionBar = () => {
         rounded="full"
         onClick={refresh}
       />
+      <UploadFileProgress/>
     </HStack>
   )
 }

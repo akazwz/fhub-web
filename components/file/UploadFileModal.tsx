@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   Center,
   Button, FormControl, FormLabel,
@@ -8,12 +8,12 @@ import {
   ModalContent, ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure
+  useDisclosure, Text
 } from '@chakra-ui/react'
 import { useFileHashCode } from 'use-hashcode'
 import { UploadOne } from '@icon-park/react'
 import { useAuth } from '../../src/hooks/useAuth'
-import { prefixDirState } from '../../src/state/file'
+import { fileUploadProgressState, prefixDirState } from '../../src/state/file'
 import { useFileList } from '../../src/hooks/useFileList'
 import { GetUploadToken, UploadFileToServerApi } from '../../src/api/file'
 import { useQiniuUpload } from '../../src/hooks/useQiniuUpload'
@@ -22,11 +22,12 @@ export const UploadFileModal = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [chosenFile, setChosenFile] = useState<File | null>(null)
   const [uptoken, setUptoken] = useState<string | null>(null)
-  const { startUpload, Qkey } = useQiniuUpload(chosenFile, uptoken)
+  const { startUpload, Qkey, progress } = useQiniuUpload(chosenFile, uptoken)
   const { sha256 } = useFileHashCode(chosenFile)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { token } = useAuth()
   const prefixDir = useRecoilValue(prefixDirState)
+  const [, setFileUploadProgress] = useRecoilState(fileUploadProgressState)
   const { refresh } = useFileList()
 
   const handleFileInputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +36,11 @@ export const UploadFileModal = () => {
     const file = event.target.files[0]
     setChosenFile(file)
   }
+
+  /* 更新文件上传进度 */
+  useEffect(() => {
+    setFileUploadProgress(progress)
+  }, [progress])
 
   /* 获取上传凭证 */
   useEffect(() => {
@@ -72,6 +78,8 @@ export const UploadFileModal = () => {
         alert('error')
         return
       }
+      setChosenFile(null)
+      setFileUploadProgress(null)
       refresh()
     })
   }, [Qkey, chosenFile, sha256, prefixDir, token])
@@ -98,9 +106,9 @@ export const UploadFileModal = () => {
               rounded={'lg'}
               borderWidth={'3px'}
               borderStyle={'dotted'}
-              onClick={()=>{fileInputRef.current?.click()}}
+              onClick={() => {fileInputRef.current?.click()}}
             >
-              Choose File
+              <Text>{chosenFile ? chosenFile.name : 'Choose File'}</Text>
             </Center>
             <input
               ref={fileInputRef}
