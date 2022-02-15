@@ -9,6 +9,7 @@ import {
   MenuButton,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import { Layout } from '../components/layout'
 import FileCard, { IFileListItem } from '../components/file/FileCard'
@@ -17,7 +18,6 @@ import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
 import { useAuth } from '../src/hooks/useAuth'
 import { GetFileList } from '../src/api/file'
-import { useRecoilValue } from 'recoil'
 import { prefixDirState, shouldGetFileListState } from '../src/state/file'
 
 const File: NextPage = () => {
