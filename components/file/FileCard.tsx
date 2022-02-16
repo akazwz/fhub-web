@@ -3,7 +3,8 @@ import {
   Box,
   Text,
   VStack,
-  useColorModeValue, Tooltip,
+  Tooltip,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { VideoIcon } from './icons/VideoIcon'
 import { MusicIcon } from './icons/MusicIcon'
