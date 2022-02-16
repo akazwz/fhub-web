@@ -23,7 +23,15 @@ export function useQiniuUpload (file: File | null, token: string | null) {
 
   /* when file and token is ready */
   useEffect(() => {
-    if (!file) return
+    if (!file) {
+      setUploadState(UploadStatus.NotReady)
+      setUploadError(null)
+      setSpeedPeak(null)
+      setQKey(null)
+      setProgress(null)
+      setObservable(null)
+      return
+    }
     if (!token) return
     setUploadState(UploadStatus.Ready)
     setObservable(upload(file, null, token))

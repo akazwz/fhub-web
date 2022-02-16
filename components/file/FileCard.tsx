@@ -15,6 +15,8 @@ import { PdfIcon } from './icons/PdfIcon'
 import { TextIcon } from './icons/TextIcon'
 import { OtherIcon } from './icons/OtherIcon'
 import { FolderIcon } from './icons/FolderIcon'
+import { useRecoilState } from 'recoil'
+import { prefixDirState } from '../../src/state/file'
 
 export interface IFileListItem {
   file_name: string,
@@ -126,7 +128,7 @@ const fileName = (fileName: string) => {
 const folderName = (fileName: string) => {
   return (
     <Text fontSize={'sm'}>
-      {fileName}
+      {fileName.slice(0, fileName.length - 1)}
     </Text>
   )
 }
@@ -157,12 +159,21 @@ const fileSize = (size: number) => {
 }
 
 const FileCard = (cloudFile: IFileListItem) => {
+  const [, setPrefix] = useRecoilState(prefixDirState)
+
+  const handleFileCardClick = () => {
+    /* 文件夹 */
+    if (!cloudFile.file) {
+      setPrefix('0/' + cloudFile.file_name)
+    }
+  }
   return (
     <Box
       w="100px"
       bg={useColorModeValue('blue.100', 'blue.900')}
       rounded="md"
       p="3"
+      onClick={handleFileCardClick}
     >
       {cloudFile.file
         ? <VStack spacing={1}>

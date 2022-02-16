@@ -1,14 +1,17 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
+  Text,
+  Modal,
   Center,
-  Button, FormControl, FormLabel,
-  Modal, ModalBody,
-  ModalCloseButton,
-  ModalContent, ModalFooter,
+  Button,
+  ModalBody,
   ModalHeader,
+  ModalFooter,
+  ModalContent,
   ModalOverlay,
-  useDisclosure, Text
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { useFileHashCode } from 'use-hashcode'
 import { UploadOne } from '@icon-park/react'
@@ -78,6 +81,7 @@ export const UploadFileModal = () => {
         alert('error')
         return
       }
+      setUptoken(null)
       setChosenFile(null)
       setFileUploadProgress(null)
       refresh()

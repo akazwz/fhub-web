@@ -34,7 +34,7 @@ export const CreateFolderModal = () => {
     if (folderName.length > 77) return
     if (!token) return
     setBtnLoading(true)
-    CreateFolderApi(token, { folder_name: folderName, prefix_dir: prefixDir })
+    CreateFolderApi(token, { folder_name: folderName + '/', prefix_dir: prefixDir })
       .then((res) => {
         setBtnLoading(false)
         if (res.status !== 201) {

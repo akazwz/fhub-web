@@ -1,11 +1,12 @@
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { prefixDirState } from '../../src/state/file'
 
 export const FileBreadCrumb = () => {
-  const prefix = useRecoilValue(prefixDirState)
+  const [prefix, setPrefix] = useRecoilState(prefixDirState)
   const folders = prefix.split('/')
+
   return (
     <Breadcrumb
       separator={<ChevronRightIcon color="gray.500"/>}
@@ -16,7 +17,14 @@ export const FileBreadCrumb = () => {
       {folders.map((folder, index) => {
         if (folder === '0') folder = 'Root'
         return (
-          <BreadcrumbItem key={index}>
+          <BreadcrumbItem
+            key={folders.slice(0, index + 1).toString()}
+            onClick={() => {
+              const folder = folders.slice(0, index + 1).join('/') + '/'
+              console.log(folder)
+              setPrefix(folder)
+            }}
+          >
             <BreadcrumbLink>
               {folder}
             </BreadcrumbLink>
