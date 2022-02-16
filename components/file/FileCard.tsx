@@ -112,7 +112,7 @@ const fileName = (fileName: string) => {
     showName =
       fileName.slice(0, 2)
       + '...'
-      + getFileName(fileName).slice(-2)
+      + getFileName(fileName).slice(-1)
       + '.'
       + getFileExtension(fileName).slice(0, 5)
   }
