@@ -21,7 +21,6 @@ export const FileBreadCrumb = () => {
             key={folders.slice(0, index + 1).toString()}
             onClick={() => {
               const folder = folders.slice(0, index + 1).join('/') + '/'
-              console.log(folder)
               setPrefix(folder)
             }}
           >

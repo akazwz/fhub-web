@@ -79,11 +79,13 @@ export const UploadFileModal = () => {
     }).then((res) => {
       if (res.status !== 201) {
         alert('error')
+        onClose()
         return
       }
       setUptoken(null)
       setChosenFile(null)
       setFileUploadProgress(null)
+      onClose()
       refresh()
     })
   }, [Qkey, chosenFile, sha256, prefixDir, token])

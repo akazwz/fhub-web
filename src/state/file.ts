@@ -16,8 +16,3 @@ export const fileUploadProgressState = atom<UploadProgress | null>({
   key: 'fileUploadProgress',
   default: null,
 })
-
-export const isFileListLoadingState = atom<boolean>({
-  key: 'isFileListLoading',
-  default: true,
-})

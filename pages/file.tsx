@@ -9,7 +9,7 @@ import {
   MenuButton,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import { Layout } from '../components/layout'
 import FileCard, { IFileListItem } from '../components/file/FileCard'
@@ -18,14 +18,14 @@ import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
 import { useAuth } from '../src/hooks/useAuth'
 import { GetFileList } from '../src/api/file'
-import { isFileListLoadingState, prefixDirState, shouldGetFileListState } from '../src/state/file'
+import {  prefixDirState, shouldGetFileListState } from '../src/state/file'
 import { FileListSkeleton } from '../components/file/FileListSkeleton'
 
 const File: NextPage = () => {
   const { token } = useAuth()
   const prefixDir = useRecoilValue(prefixDirState)
   const shouldGetFileList = useRecoilValue(shouldGetFileListState)
-  const [isFileListLoading, setIsFileListLoading] = useRecoilState(isFileListLoadingState)
+  const [isFileListLoading, setIsFileListLoading] = useState(true)
 
   const [fileList, setFileList] = useState<IFileListItem[]>([])
 

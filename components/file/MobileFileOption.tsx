@@ -5,10 +5,13 @@ import {
   DrawerOverlay, HStack,
   IconButton,
   useColorModeValue,
-  useDisclosure
+  useDisclosure, VStack
 } from '@chakra-ui/react'
 import { useRef } from 'react'
 import { FolderPlus, Plus, UploadOne } from '@icon-park/react'
+import { UploadFileModal } from './UploadFileModal'
+import { CreateFolderModal } from './CreateFolderModal'
+import { UploadFileProgress } from './UploadFileProgress'
 
 export const MobileFileOption = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -39,26 +42,19 @@ export const MobileFileOption = () => {
       >
         <DrawerOverlay/>
         <DrawerContent bg={'transparent'}>
-          <HStack
+          <VStack
             minH={'30vh'}
             bg={useColorModeValue('blue.200', 'blue.800')}
             rounded={'lg'}
             m={7}
             justifyContent={'center'}
-            spacing={7}
           >
-            <Button
-              leftIcon={<UploadOne/>}
-              colorScheme={'blue'}
-            >
-              Upload
-            </Button>
-            <Button
-              leftIcon={<FolderPlus/>}
-            >
-              New Folder
-            </Button>
-          </HStack>
+            <HStack spacing={7}>
+              <UploadFileModal/>
+              <CreateFolderModal/>
+            </HStack>
+            <UploadFileProgress/>
+          </VStack>
         </DrawerContent>
       </Drawer>
     </Box>
