@@ -118,7 +118,7 @@ const fileName = (fileName: string) => {
   }
   return (
     <Tooltip label={fileName}>
-      <Text fontSize={'sm'}>
+      <Text fontSize={'smaller'}>
         {showName}
       </Text>
     </Tooltip>
@@ -172,7 +172,7 @@ const FileCard = (cloudFile: IFileListItem) => {
       w="100px"
       bg={useColorModeValue('blue.100', 'blue.900')}
       rounded="md"
-      p="3"
+      p="2"
       onClick={handleFileCardClick}
     >
       {cloudFile.file
