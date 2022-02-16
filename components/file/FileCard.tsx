@@ -110,7 +110,7 @@ const fileName = (fileName: string) => {
   let showName = fileName
   if (fileName.length > 5) {
     showName =
-      fileName.slice(0, 3)
+      fileName.slice(0, 2)
       + '...'
       + getFileName(fileName).slice(-2)
       + '.'

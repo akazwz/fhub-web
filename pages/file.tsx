@@ -9,7 +9,7 @@ import {
   MenuButton,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import { Layout } from '../components/layout'
 import FileCard, { IFileListItem } from '../components/file/FileCard'
@@ -18,17 +18,20 @@ import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
 import { useAuth } from '../src/hooks/useAuth'
 import { GetFileList } from '../src/api/file'
-import { prefixDirState, shouldGetFileListState } from '../src/state/file'
+import { isFileListLoadingState, prefixDirState, shouldGetFileListState } from '../src/state/file'
+import { FileListSkeleton } from '../components/file/FileListSkeleton'
 
 const File: NextPage = () => {
   const { token } = useAuth()
   const prefixDir = useRecoilValue(prefixDirState)
   const shouldGetFileList = useRecoilValue(shouldGetFileListState)
+  const [isFileListLoading, setIsFileListLoading] = useRecoilState(isFileListLoadingState)
 
   const [fileList, setFileList] = useState<IFileListItem[]>([])
 
   useEffect(() => {
     if (!token) return
+    setIsFileListLoading(true)
     GetFileList(token, prefixDir)
       .then((res) => {
         if (res.status !== 200) {
@@ -38,6 +41,7 @@ const File: NextPage = () => {
         res.json().then((resData) => {
           const { data } = resData
           setFileList(data)
+          setIsFileListLoading(false)
         })
       })
   }, [prefixDir, token, shouldGetFileList])
@@ -55,22 +59,25 @@ const File: NextPage = () => {
       <FileOptionBar/>
       <Box minH={'75vh'} onContextMenu={handleContextMenu}>
         <FileBreadCrumb/>
-        <Grid
-          templateColumns={'repeat(auto-fill, minmax(100px, 1fr))'}
-          autoRows={'minmax(100px, auto)'}
-          gap="3"
-          padding="3"
-        >
-          {fileList.map((file, index) => (
-            <FileCard
-              key={file.sha256}
-              file_name={file.file_name}
-              size={file.size}
-              file={file.file}
-              sha256={file.sha256}
-            />
-          ))}
-        </Grid>
+        {isFileListLoading
+          ? <FileListSkeleton/>
+          : <Grid
+            templateColumns={'repeat(auto-fill, minmax(100px, 1fr))'}
+            autoRows={'minmax(100px, auto)'}
+            gap="3"
+            padding="3"
+          >
+            {fileList.map((file, index) => (
+              <FileCard
+                key={file.sha256}
+                file_name={file.file_name}
+                size={file.size}
+                file={file.file}
+                sha256={file.sha256}
+              />
+            ))}
+          </Grid>
+        }
       </Box>
       <MobileFileOption/>
       {/* context menu */}
