@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { UploadProgress } from 'qiniu-js/src/upload/base'
+import { UploadProgress } from 'qiniu-js/esm/upload'
 
 /* record if user choose to remember me checkbox */
 export const prefixDirState = atom<string>({

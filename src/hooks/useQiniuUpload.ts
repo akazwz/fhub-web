@@ -61,7 +61,7 @@ export function useQiniuUpload (file: File | null, token: string | null) {
       },
       complete: (newInfo) => {
         setUploadState(UploadStatus.Success)
-        const {hash, key} = newInfo
+        const { hash, key } = newInfo
         setQKey(key)
       }
     }) || null
