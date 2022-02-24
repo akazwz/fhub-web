@@ -9,25 +9,25 @@ import {
   MenuButton,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import { Layout } from '../components/layout'
-import FileCard, { IFileListItem } from '../components/file/FileCard'
+import FileCard, { CloudFile } from '../components/file/FileCard'
 import { FileOptionBar } from '../components/file/FileOptionBar'
 import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
 import { useAuth } from '../src/hooks/useAuth'
-import { GetFileList } from '../src/api/file'
-import {  prefixDirState, shouldGetFileListState } from '../src/state/file'
+import { GetFileList, GetFileURI } from '../src/api/file'
+import { prefixDirState, shouldGetFileListState } from '../src/state/file'
 import { FileListSkeleton } from '../components/file/FileListSkeleton'
+import { router } from 'next/client'
 
 const File: NextPage = () => {
   const { token } = useAuth()
-  const prefixDir = useRecoilValue(prefixDirState)
+  const [prefixDir, setPrefix] = useRecoilState(prefixDirState)
   const shouldGetFileList = useRecoilValue(shouldGetFileListState)
   const [isFileListLoading, setIsFileListLoading] = useState(true)
-
-  const [fileList, setFileList] = useState<IFileListItem[]>([])
+  const [fileList, setFileList] = useState<CloudFile[]>([])
 
   useEffect(() => {
     if (!token) return
@@ -54,6 +54,31 @@ const File: NextPage = () => {
     onOpen()
   }
 
+  /* 文件卡片点击 */
+  const handleFileCardClick = (file: CloudFile) => {
+    /* 文件夹 */
+    if (!file.file) {
+      setPrefix('0/' + file.file_name)
+      return
+    }
+    /* 文件 */
+    if (!token) return
+    GetFileURI(token, file.fid).then((res) => {
+      if (!res.ok) {
+        alert('error')
+        return
+      }
+      res.json().then((resData) => {
+        const { data } = resData
+        const { uri } = data
+        console.log(uri)
+      })
+    }).catch((e) => {
+      console.log(e)
+      alert('error')
+    })
+  }
+
   return (
     <Layout>
       <FileOptionBar/>
@@ -69,11 +94,9 @@ const File: NextPage = () => {
           >
             {fileList.map((file, index) => (
               <FileCard
-                key={file.sha256}
-                file_name={file.file_name}
-                size={file.size}
-                file={file.file}
-                sha256={file.sha256}
+                key={'file-card-' + index}
+                cloudFile={file}
+                onClick={handleFileCardClick}
               />
             ))}
           </Grid>

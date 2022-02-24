@@ -16,10 +16,14 @@ import { PdfIcon } from './icons/PdfIcon'
 import { TextIcon } from './icons/TextIcon'
 import { OtherIcon } from './icons/OtherIcon'
 import { FolderIcon } from './icons/FolderIcon'
-import { useRecoilState } from 'recoil'
-import { prefixDirState } from '../../src/state/file'
 
-export interface IFileListItem {
+export interface FileItem {
+  cloudFile: CloudFile,
+  onClick: (file: CloudFile) => void,
+}
+
+export interface CloudFile {
+  fid: string,
   file_name: string,
   size: number,
   file: boolean,
@@ -159,33 +163,25 @@ const fileSize = (size: number) => {
   )
 }
 
-const FileCard = (cloudFile: IFileListItem) => {
-  const [, setPrefix] = useRecoilState(prefixDirState)
-
-  const handleFileCardClick = () => {
-    /* 文件夹 */
-    if (!cloudFile.file) {
-      setPrefix('0/' + cloudFile.file_name)
-    }
-  }
+const FileCard = (fileItem: FileItem) => {
   return (
     <Box
       w="100px"
       bg={useColorModeValue('blue.100', 'blue.900')}
       rounded="md"
       p="2"
-      onClick={handleFileCardClick}
+      onClick={() => {fileItem.onClick(fileItem.cloudFile)}}
     >
-      {cloudFile.file
+      {fileItem.cloudFile.file
         ? <VStack spacing={1}>
-          {fileIcon(cloudFile.file_name)}
-          {fileName(cloudFile.file_name)}
-          {fileSize(cloudFile.size)}
+          {fileIcon(fileItem.cloudFile.file_name)}
+          {fileName(fileItem.cloudFile.file_name)}
+          {fileSize(fileItem.cloudFile.size)}
         </VStack>
         :
         <VStack spacing={3}>
           <FolderIcon fontSize={55}/>
-          {folderName(cloudFile.file_name)}
+          {folderName(fileItem.cloudFile.file_name)}
         </VStack>
       }
     </Box>

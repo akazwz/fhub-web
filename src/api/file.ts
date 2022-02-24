@@ -1,4 +1,6 @@
-const baseUrl = 'https://gin-akazwz.koyeb.app'
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://gin-akazwz.koyeb.app'
+  : 'http://localhost:8080'
 
 export interface IUploadFile {
   file: boolean,
@@ -50,6 +52,16 @@ export const CreateFolderApi = (token: string, folder: ICreateFolder) => {
 /* 获取文件列表 */
 export const GetFileList = (token: string, prefixDir: string) => {
   return fetch(`${baseUrl}/v1/file?prefix_dir=${prefixDir}`, {
+    method: 'GET',
+    headers: {
+      token: token
+    },
+  })
+}
+
+/* 获取文件URL */
+export const GetFileURI = (token: string, fid: string) => {
+  return fetch(`${baseUrl}/v1/file/uri?fid=${fid}`, {
     method: 'GET',
     headers: {
       token: token
