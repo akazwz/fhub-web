@@ -52,7 +52,7 @@ const isAudioFile = (fileName: string): boolean => {
   return audioExtensions.indexOf(ext) !== -1
 }
 
-const isImageFile = (fileName: string): boolean => {
+export const isImageFile = (fileName: string): boolean => {
   const imageExtensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff']
   const ext = getFileExtension(fileName).toLowerCase()
   return imageExtensions.indexOf(ext) !== -1

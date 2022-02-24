@@ -11,8 +11,9 @@ import {
 } from '@chakra-ui/react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
+import Lightbox from 'react-image-lightbox'
 import { Layout } from '../components/layout'
-import FileCard, { CloudFile } from '../components/file/FileCard'
+import FileCard, { CloudFile, isImageFile } from '../components/file/FileCard'
 import { FileOptionBar } from '../components/file/FileOptionBar'
 import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
 import { MobileFileOption } from '../components/file/MobileFileOption'
@@ -20,13 +21,15 @@ import { useAuth } from '../src/hooks/useAuth'
 import { GetFileList, GetFileURI } from '../src/api/file'
 import { prefixDirState, shouldGetFileListState } from '../src/state/file'
 import { FileListSkeleton } from '../components/file/FileListSkeleton'
-import { router } from 'next/client'
+import 'react-image-lightbox/style.css'
 
 const File: NextPage = () => {
   const { token } = useAuth()
   const [prefixDir, setPrefix] = useRecoilState(prefixDirState)
   const shouldGetFileList = useRecoilValue(shouldGetFileListState)
-  const [isFileListLoading, setIsFileListLoading] = useState(true)
+  const [isFileListLoading, setIsFileListLoading] = useState<boolean>(true)
+  const [isImageLightBoxOpen, setIsImageLightBoxOpen] = useState<boolean>(false)
+  const [imageSrc, setImageSrc] = useState<string>('')
   const [fileList, setFileList] = useState<CloudFile[]>([])
 
   useEffect(() => {
@@ -61,6 +64,11 @@ const File: NextPage = () => {
       setPrefix('0/' + file.file_name)
       return
     }
+
+    if (isImageFile(file.file_name)) {
+      setIsImageLightBoxOpen(true)
+    }
+
     /* 文件 */
     if (!token) return
     GetFileURI(token, file.fid).then((res) => {
@@ -71,7 +79,7 @@ const File: NextPage = () => {
       res.json().then((resData) => {
         const { data } = resData
         const { uri } = data
-        console.log(uri)
+        setImageSrc(uri)
       })
     }).catch((e) => {
       console.log(e)
@@ -112,6 +120,15 @@ const File: NextPage = () => {
           <MenuItem icon={<Refresh/>}>Refresh</MenuItem>
         </MenuList>
       </Menu>
+      {isImageLightBoxOpen
+        ? (
+          <Lightbox
+            mainSrc={imageSrc}
+            onCloseRequest={() => setIsImageLightBoxOpen(false)}
+          />
+        )
+        : null
+      }
     </Layout>
   )
 }
