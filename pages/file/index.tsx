@@ -82,11 +82,11 @@ const Index: NextPage = () => {
       res.json().then((resData) => {
         const { data } = resData
         const { uri } = data
-        if (isVideoFile(file.file_name)) {
-          router.push(`/file/video?url=${uri}`).then()
+        if (isImageFile(file.file_name)) {
+          setImageSrc(uri)
           return
         }
-        setImageSrc(uri)
+        router.push(`${uri}`).then()
       })
     }).catch((e) => {
       console.log(e)
