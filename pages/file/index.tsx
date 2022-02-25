@@ -1,5 +1,6 @@
 import { MouseEvent, useEffect, useState } from 'react'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import {
   Box,
   Grid,
@@ -12,18 +13,18 @@ import {
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
 import Lightbox from 'react-image-lightbox'
-import { Layout } from '../components/layout'
-import FileCard, { CloudFile, isImageFile } from '../components/file/FileCard'
-import { FileOptionBar } from '../components/file/FileOptionBar'
-import { FileBreadCrumb } from '../components/file/FileBreadCrumb'
-import { MobileFileOption } from '../components/file/MobileFileOption'
-import { useAuth } from '../src/hooks/useAuth'
-import { GetFileList, GetFileURI } from '../src/api/file'
-import { prefixDirState, shouldGetFileListState } from '../src/state/file'
-import { FileListSkeleton } from '../components/file/FileListSkeleton'
+import { Layout } from '../../components/layout'
+import FileCard, { CloudFile, getFileExtension, isImageFile, isVideoFile } from '../../components/file/FileCard'
+import { FileOptionBar } from '../../components/file/FileOptionBar'
+import { FileBreadCrumb } from '../../components/file/FileBreadCrumb'
+import { MobileFileOption } from '../../components/file/MobileFileOption'
+import { useAuth } from '../../src/hooks/useAuth'
+import { GetFileList, GetFileURI } from '../../src/api/file'
+import { prefixDirState, shouldGetFileListState } from '../../src/state/file'
+import { FileListSkeleton } from '../../components/file/FileListSkeleton'
 import 'react-image-lightbox/style.css'
 
-const File: NextPage = () => {
+const Index: NextPage = () => {
   const { token } = useAuth()
   const [prefixDir, setPrefix] = useRecoilState(prefixDirState)
   const shouldGetFileList = useRecoilValue(shouldGetFileListState)
@@ -31,6 +32,8 @@ const File: NextPage = () => {
   const [isImageLightBoxOpen, setIsImageLightBoxOpen] = useState<boolean>(false)
   const [imageSrc, setImageSrc] = useState<string>('')
   const [fileList, setFileList] = useState<CloudFile[]>([])
+
+  const router = useRouter()
 
   useEffect(() => {
     if (!token) return
@@ -79,6 +82,10 @@ const File: NextPage = () => {
       res.json().then((resData) => {
         const { data } = resData
         const { uri } = data
+        if (isVideoFile(file.file_name)) {
+          router.push(`/file/video?url=${uri}`).then()
+          return
+        }
         setImageSrc(uri)
       })
     }).catch((e) => {
@@ -124,7 +131,10 @@ const File: NextPage = () => {
         ? (
           <Lightbox
             mainSrc={imageSrc}
-            onCloseRequest={() => setIsImageLightBoxOpen(false)}
+            onCloseRequest={() => {
+              setIsImageLightBoxOpen(false)
+              setImageSrc('')
+            }}
           />
         )
         : null
@@ -133,4 +143,4 @@ const File: NextPage = () => {
   )
 }
 
-export default File
+export default Index

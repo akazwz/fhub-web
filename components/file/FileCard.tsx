@@ -35,12 +35,12 @@ const getFileName = (filePath: string): string => {
   return filePath.slice(0, index)
 }
 
-const getFileExtension = (fileName: string): string => {
+export const getFileExtension = (fileName: string): string => {
   const index = fileName.lastIndexOf('.')
   return fileName.slice(index + 1)
 }
 
-const isVideoFile = (fileName: string): boolean => {
+export const isVideoFile = (fileName: string): boolean => {
   const videoExtensions = ['mp4', 'mov', 'avi', 'flv', 'wmv', 'mpg', 'mkv', 'f4v', 'rmvb', 'rm', '3gb']
   const ext = getFileExtension(fileName).toLowerCase()
   return videoExtensions.indexOf(ext) !== -1
