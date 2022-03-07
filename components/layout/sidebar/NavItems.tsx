@@ -31,6 +31,7 @@ interface NavItemProps extends FlexProps {
 
 const NavItem = ({ iconName, routeName, children, ...rest }: NavItemProps) => {
   const router = useRouter()
+  const bg = useColorModeValue('blue.200', 'blue.900')
   return (
     <Link href={'/' + routeName} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
@@ -41,17 +42,18 @@ const NavItem = ({ iconName, routeName, children, ...rest }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
+        bg={'/' + routeName === router.asPath ? bg : 'transparent'}
         _hover={{
-          bg: useColorModeValue('blue.100', 'blue.900'),
+          bg: useColorModeValue('blue.100', 'blue.800'),
         }}
         color={'/' + routeName === router.asPath ? '#2F88FF' : ''}
-        {...rest}>
+        {...rest}
+      >
         {iconName && (
           <Box mr="3">
             <IconPark
               type={iconName}
               size="21px"
-
             />
           </Box>
         )}

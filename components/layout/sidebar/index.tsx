@@ -3,12 +3,14 @@ import {
   Flex,
   Text,
   HStack,
+  VStack,
   CloseButton,
   useColorModeValue,
-  BoxProps,
+  BoxProps, Spacer,
 } from '@chakra-ui/react'
 import { CloudStorage } from '@icon-park/react'
 import { NavItems } from './NavItems'
+import { ColorModeToggle } from '../header/ColorModeToggle'
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
@@ -21,7 +23,7 @@ interface SidebarTopProps {
 const SidebarTop = ({ onClose }: SidebarTopProps) => {
   return (
     <Flex
-      h="20"
+      h="5rem"
       alignItems="center"
       mx="8"
       justifyContent="space-between"
@@ -53,16 +55,28 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="1s ease"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('white', 'gray.800')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
+      overflow="scroll"
+      css={{
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
       {...rest}
     >
-      <SidebarTop onClose={onClose}/>
-      <NavItems/>
+      <Flex
+        direction="column"
+        h="full"
+      >
+        <SidebarTop onClose={onClose}/>
+        <NavItems/>
+        <Spacer/>
+      </Flex>
     </Box>
   )
 }

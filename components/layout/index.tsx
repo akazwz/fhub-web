@@ -38,7 +38,6 @@ export const Layout = ({ children }: IProps) => {
     <Box minH="100vh" bg={bg}>
       {/* md sidebar */}
       <Sidebar onClose={onClose} display={{ base: 'none', md: 'block' }}/>
-      {/* drawer sidebar */}
       <Drawer
         autoFocus={false}
         isOpen={isOpen}
@@ -53,7 +52,12 @@ export const Layout = ({ children }: IProps) => {
         </DrawerContent>
       </Drawer>
       <Header onOpen={onOpen} user={user}/>
-      <Box minH="100%" ml={{ base: 0, md: 60 }} p="4">
+      <Box
+        minH="100%"
+        ml={{ base: 0, md: 60 }}
+        p="4"
+        bg={useColorModeValue('white', 'gray.900')}
+      >
         {isUserLoading ? <LoadingPage/> : children}
       </Box>
     </Box>

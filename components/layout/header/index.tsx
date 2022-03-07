@@ -1,15 +1,16 @@
 import {
-  Text,
+  Menu,
   Flex,
   HStack,
+  MenuItem,
+  MenuList,
+  MenuButton,
   IconButton,
   useColorModeValue,
   FlexProps,
 } from '@chakra-ui/react'
-import { CloudStorage, HamburgerButton, } from '@icon-park/react'
-import { ColorModeToggle } from './ColorModeToggle'
-import SettingDrawer from './SettingDrawer'
-import { ProfileMenu } from './ProfileMenu'
+import { AddIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { FolderPlus, UploadOne } from '@icon-park/react'
 import { IUser } from '../../../src/hooks/useUser'
 
 interface IProps extends FlexProps {
@@ -22,12 +23,10 @@ export const Header = ({ onOpen, user, ...rest }: IProps) => {
     <Flex
       transition="1s ease"
       ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 4 }}
-      height="20"
+      px={3}
+      height="5rem"
       alignItems="center"
       bg={useColorModeValue('white', 'gray.900')}
-      borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
       justifyContent={{ base: 'space-between', md: 'flex-end' }}
       {...rest}
     >
@@ -35,41 +34,29 @@ export const Header = ({ onOpen, user, ...rest }: IProps) => {
         aria-label={'open menu'}
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
-        variant="outline"
-        icon={<HamburgerButton/>}
+        variant="ghost"
+        icon={<HamburgerIcon/>}
+        size="sm"
       />
-
-      <HStack
-        spacing={3}
-        display={{ base: 'flex', md: 'none' }}
-      >
-        <CloudStorage
-          theme="two-tone"
-          size="30px"
-          fill={[useColorModeValue('black', 'white'), '#2F88FF']
-          }
-        />
-        <Text
-          bgGradient="linear(to-r,  #FF0080, #00B0FF)"
-          bgClip="text"
-          fontSize="xl"
-          fontWeight="extrabold"
-        >
-          FHub
-        </Text>
-      </HStack>
       <HStack spacing={{ base: 1, md: 6 }}>
-        <ColorModeToggle/>
-        <SettingDrawer/>
-        <ProfileMenu
-          username={user.username}
-          email={user.email}
-          phone={user.phone}
-          gender={user.gender}
-          role={user.role}
-          avatar={user.avatar}
-          createAt={user.createAt}
-        />
+        <Menu >
+          <MenuButton
+            as={IconButton}
+            aria-label="Options"
+            icon={<AddIcon/>}
+            variant="ghost"
+            size="sm"
+            colorScheme="blue"
+          />
+          <MenuList bg={useColorModeValue('white', 'gray.800')}>
+            <MenuItem icon={<UploadOne/>}>
+              New File
+            </MenuItem>
+            <MenuItem icon={<FolderPlus/>}>
+              New Folder
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </HStack>
     </Flex>
   )
