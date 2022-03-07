@@ -14,32 +14,33 @@ import { FolderPlus, UploadOne } from '@icon-park/react'
 import { IUser } from '../../../src/hooks/useUser'
 
 interface IProps extends FlexProps {
+  isOpen: boolean;
   onOpen: () => void;
+  onClose: () => void;
   user: IUser
 }
 
-export const Header = ({ onOpen, user, ...rest }: IProps) => {
+export const Header = ({ isOpen, onOpen, onClose, user, ...rest }: IProps) => {
   return (
     <Flex
       transition="1s ease"
-      ml={{ base: 0, md: 60 }}
+      ml={isOpen ? 60 : 0}
       px={3}
       height="5rem"
       alignItems="center"
       bg={useColorModeValue('white', 'gray.900')}
-      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      justifyContent="space-between"
       {...rest}
     >
       <IconButton
         aria-label={'open menu'}
-        display={{ base: 'flex', md: 'none' }}
-        onClick={onOpen}
+        onClick={isOpen ? onClose : onOpen}
         variant="ghost"
         icon={<HamburgerIcon/>}
         size="sm"
       />
       <HStack spacing={{ base: 1, md: 6 }}>
-        <Menu >
+        <Menu>
           <MenuButton
             as={IconButton}
             aria-label="Options"

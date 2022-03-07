@@ -1,23 +1,23 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   Box,
-  DrawerContent,
+  Flex,
   useColorModeValue,
   useDisclosure,
-  Drawer,
 } from '@chakra-ui/react'
-import { Header } from './header'
 import { Sidebar } from './sidebar'
 import { useUser } from '../../src/hooks/useUser'
 import { LoadingPage } from '../loading'
+import { LayoutIcon, LayoutIconLeft, LayoutIconRight } from './LayoutIcon'
 
 interface IProps {
   children: ReactNode
 }
 
 export const Layout = ({ children }: IProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true })
+  const [isHover, setIsHover] = useState<boolean>(false)
   const bg = useColorModeValue('gray.100', 'gray.900')
 
   const router = useRouter()
@@ -30,36 +30,41 @@ export const Layout = ({ children }: IProps) => {
     }, 3000)
   }
 
-  /*if (isLoading) {
-    return <LoadingPage/>
-  }*/
+  const hoverIcon = isOpen
+    ? <LayoutIconLeft width={'30px'} height={'42px'} onClick={onClose}/>
+    : <LayoutIconRight width={'30px'} height={'42px'} onClick={onOpen}/>
 
   return (
     <Box minH="100vh" bg={bg}>
-      {/* md sidebar */}
-      <Sidebar onClose={onClose} display={{ base: 'none', md: 'block' }}/>
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
+      <Sidebar isOpen={isOpen}/>
+      <Flex
+        transition="all .3s ease"
+        alignItems="center"
+        pos="fixed"
+        h="full"
+        left={isOpen ? '240px' : 0}
+        w={'30px'}
       >
-        <DrawerContent>
-          <Sidebar onClose={onClose}/>
-        </DrawerContent>
-      </Drawer>
-      <Header onOpen={onOpen} user={user}/>
-      <Box
-        minH="100%"
-        ml={{ base: 0, md: 60 }}
-        p="4"
-        bg={useColorModeValue('white', 'gray.900')}
-      >
-        {isUserLoading ? <LoadingPage/> : children}
-      </Box>
+        <Box
+          onMouseEnter={() => {setIsHover(true)}}
+          onMouseLeave={() => {setIsHover(false)}}
+        >
+          {isHover
+            ? hoverIcon
+            : <LayoutIcon width={'30px'} height={'42px'}/>
+          }
+        </Box>
+      </Flex>
+      {isUserLoading
+        ? <LoadingPage/>
+        : <Box
+          transition="all .3s ease"
+          ml={isOpen ? '240px' : 0}
+          p={'28px'}
+        >
+          {children}
+        </Box>
+      }
     </Box>
   )
 }

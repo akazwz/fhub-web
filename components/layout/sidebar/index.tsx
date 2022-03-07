@@ -2,25 +2,20 @@ import {
   Box,
   Flex,
   Text,
+  Spacer,
   HStack,
-  VStack,
-  CloseButton,
   useColorModeValue,
-  BoxProps, Spacer,
+  BoxProps,
 } from '@chakra-ui/react'
 import { CloudStorage } from '@icon-park/react'
 import { NavItems } from './NavItems'
-import { ColorModeToggle } from '../header/ColorModeToggle'
+import UserProfileSideBar from './UserProfileSideBar'
 
 interface SidebarProps extends BoxProps {
-  onClose: () => void;
+  isOpen: boolean;
 }
 
-interface SidebarTopProps {
-  onClose: () => void;
-}
-
-const SidebarTop = ({ onClose }: SidebarTopProps) => {
+const SidebarTop = () => {
   return (
     <Flex
       h="5rem"
@@ -46,19 +41,18 @@ const SidebarTop = ({ onClose }: SidebarTopProps) => {
           FHub
         </Text>
       </HStack>
-      <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose}/>
     </Flex>
   )
 }
 
-export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
+export const Sidebar = ({ isOpen, ...rest }: SidebarProps) => {
   return (
     <Box
-      transition="1s ease"
+      transition="all .3s ease"
       bg={useColorModeValue('white', 'gray.800')}
       borderRight="1px"
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
+      w={isOpen ? '240px' : 0}
       pos="fixed"
       h="full"
       overflow="scroll"
@@ -73,9 +67,10 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
         direction="column"
         h="full"
       >
-        <SidebarTop onClose={onClose}/>
+        <SidebarTop/>
         <NavItems/>
         <Spacer/>
+        <UserProfileSideBar/>
       </Flex>
     </Box>
   )
