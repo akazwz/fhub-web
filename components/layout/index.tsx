@@ -18,7 +18,7 @@ interface IProps {
 export const Layout = ({ children }: IProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true })
   const [isHover, setIsHover] = useState<boolean>(false)
-  const bg = useColorModeValue('gray.100', 'gray.900')
+  const bg = useColorModeValue('gray.100', 'rgb(17, 17, 19)')
 
   const router = useRouter()
   const { user, isUserError, isUserLoading } = useUser()
@@ -60,6 +60,8 @@ export const Layout = ({ children }: IProps) => {
         : <Box
           transition="all .3s ease"
           ml={isOpen ? '240px' : 0}
+          bg={bg}
+          h={'100vh'}
           p={'28px'}
         >
           {children}

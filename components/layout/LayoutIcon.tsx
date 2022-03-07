@@ -16,7 +16,7 @@ export const LayoutIcon = createIcon({
     fill: 'none',
     width: '16',
     height: '42',
-    stroke: 'gray.700',
+    stroke: 'rgba(132,133,141,0.24)',
   }
 })
 
@@ -36,7 +36,7 @@ export const LayoutIconLeft = createIcon({
     fill: 'none',
     width: '16',
     height: '42',
-    stroke: 'gray.700',
+    stroke: 'rgba(132,133,141,0.24)',
   }
 })
 
@@ -56,6 +56,6 @@ export const LayoutIconRight = createIcon({
     fill: 'none',
     width: '16',
     height: '42',
-    stroke: 'gray.700',
+    stroke: 'rgba(132,133,141,0.24)',
   }
 })

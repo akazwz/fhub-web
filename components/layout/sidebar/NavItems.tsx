@@ -5,7 +5,7 @@ import {
   Flex,
   Link,
   useColorModeValue,
-  FlexProps,
+  FlexProps, Text,
 } from '@chakra-ui/react'
 import IconPark from '@icon-park/react/lib/all'
 
@@ -16,11 +16,12 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'File', routeName: 'file', iconName: 'FileCabinet' },
-  { name: 'Video', routeName: 'video', iconName: 'Video' },
-  { name: 'Image', routeName: 'image', iconName: 'Pic' },
-  { name: 'Music', routeName: 'music', iconName: 'Music' },
-  { name: 'Star', routeName: 'star', iconName: 'Star' },
+  { name: '文件', routeName: 'file', iconName: 'FileSuccess' },
+  { name: '相册', routeName: 'video', iconName: 'Picture' },
+  { name: '收藏夹', routeName: 'image', iconName: 'Like' },
+  { name: '保险箱', routeName: 'music', iconName: 'Strongbox' },
+  { name: '订阅', routeName: 'star', iconName: 'Rss' },
+  { name: '回收站', routeName: 'star', iconName: 'Delete' },
 ]
 
 interface NavItemProps extends FlexProps {
@@ -31,22 +32,22 @@ interface NavItemProps extends FlexProps {
 
 const NavItem = ({ iconName, routeName, children, ...rest }: NavItemProps) => {
   const router = useRouter()
-  const bg = useColorModeValue('blue.200', 'blue.900')
+  const bg = useColorModeValue('blue.200', 'rgba(132,133,141,0.24)')
   return (
     <Link href={'/' + routeName} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
-        align="center"
-        p="4"
-        mx="4"
+        w="216px"
+        alignItems="center"
+        p="12px"
+        mx="12px"
         mb="1"
         borderRadius="lg"
         role="group"
         cursor="pointer"
         bg={'/' + routeName === router.asPath ? bg : 'transparent'}
         _hover={{
-          bg: useColorModeValue('blue.100', 'blue.800'),
+          bg: useColorModeValue('blue.100', 'rgba(132,133,141,0.12)'),
         }}
-        color={'/' + routeName === router.asPath ? '#2F88FF' : ''}
         {...rest}
       >
         {iconName && (
@@ -57,7 +58,9 @@ const NavItem = ({ iconName, routeName, children, ...rest }: NavItemProps) => {
             />
           </Box>
         )}
-        {children}
+        <Text fontSize="14px">
+          {children}
+        </Text>
       </Flex>
     </Link>
   )
@@ -73,5 +76,5 @@ export const NavItems = () => {
       {link.name}
     </NavItem>
   ))
-  return <>{list}</>
+  return <Box>{list}</Box>
 }

@@ -3,14 +3,19 @@ import {
   Spacer,
   Avatar,
   HStack,
-  IconButton,
+  IconButton, useColorModeValue,
 } from '@chakra-ui/react'
 import { More } from '@icon-park/react'
 
 const UserProfileSideBar = () => {
   return (
     <>
-      <HStack p={3} spacing={5}>
+      <HStack
+        p={3}
+        spacing={5}
+        h="75px"
+        _hover={{ backgroundColor: useColorModeValue('blue.100', 'rgba(132,133,141,0.12)') }}
+      >
         <Avatar size="sm"/>
         <Text>akazwz</Text>
         <Spacer/>

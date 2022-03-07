@@ -5,7 +5,7 @@ import {
   Spacer,
   HStack,
   useColorModeValue,
-  BoxProps,
+  BoxProps, Divider,
 } from '@chakra-ui/react'
 import { CloudStorage } from '@icon-park/react'
 import { NavItems } from './NavItems'
@@ -18,24 +18,27 @@ interface SidebarProps extends BoxProps {
 const SidebarTop = () => {
   return (
     <Flex
-      h="5rem"
       alignItems="center"
-      mx="8"
+      mx="24px"
+      w="200px"
+      pt="36px"
+      pb="36px"
       justifyContent="space-between"
     >
       <HStack
         spacing={3}
+        h="24px"
       >
         <CloudStorage
           theme="two-tone"
-          size="37px"
+          size="21px"
           fill={[useColorModeValue('black', 'white'), '#2F88FF']
           }
         />
         <Text
           bgGradient="linear(to-r,  #FF0080, #00B0FF)"
           bgClip="text"
-          fontSize="3xl"
+          fontSize="21px"
           fontWeight="extrabold"
         >
           FHub
@@ -49,9 +52,7 @@ export const Sidebar = ({ isOpen, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="all .3s ease"
-      bg={useColorModeValue('white', 'gray.800')}
-      borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+      bg={useColorModeValue('white', 'rgb(34, 34, 38)')}
       w={isOpen ? '240px' : 0}
       pos="fixed"
       h="full"
@@ -70,6 +71,7 @@ export const Sidebar = ({ isOpen, ...rest }: SidebarProps) => {
         <SidebarTop/>
         <NavItems/>
         <Spacer/>
+        <Divider/>
         <UserProfileSideBar/>
       </Flex>
     </Box>
