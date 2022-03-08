@@ -8,11 +8,22 @@ import {
   MenuList,
   MenuItem,
   MenuButton,
-  useDisclosure, useColorModeValue, Flex, Spacer, Divider, Text, HStack, IconButton, background, MenuGroup,
+  useDisclosure,
+  useColorModeValue,
+  Flex,
+  Spacer,
+  Divider,
+  Text,
+  HStack,
+  IconButton,
+  background,
+  MenuGroup,
+  Radio,
+  Checkbox, Button, MenuOptionGroup, MenuItemOption, MenuDivider,
 } from '@chakra-ui/react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { AddIcon, SearchIcon } from '@chakra-ui/icons'
-import { FolderPlus, Refresh, Search, UploadOne } from '@icon-park/react'
+import { AddIcon, SearchIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { FolderPlus, Check, SortThree, SortTwo, UploadOne } from '@icon-park/react'
 import Lightbox from 'react-image-lightbox'
 import { Layout } from '../../components/layout'
 import FileCard, { CloudFile, getFileExtension, isImageFile, isVideoFile } from '../../components/file/FileCard'
@@ -104,7 +115,7 @@ const Index: NextPage = () => {
         h="full"
         transition="all .3s ease"
       >
-        <HStack h="40px" mb="24px" spacing="24px" pr="16px">
+        <HStack h="40px" mb="24px" spacing="24px" pr="40px">
           <FileBreadCrumb/>
           <Spacer/>
           <IconButton
@@ -121,39 +132,100 @@ const Index: NextPage = () => {
               rounded="full"
               variant="ghost"
               size="sm"
-              _hover={{ backgroundColor: useColorModeValue('blue.100', 'linear-gradient(320.88deg, #446dff 0%, rgba(99, 125, 255, 0.75) 100%)') }}
               bg="linear-gradient(129.12deg, #365bde 0%, #526efa 100%)"
               icon={<AddIcon fontSize="1rem"/>}
             />
-              <MenuList
-                display="flex"
-                flexDirection="column"
-                alignContent="flex-start"
-                minW="167px"
-                bg={useColorModeValue('white', 'rgb(49, 49, 54)')}
-                border="none"
-                pl="5px"
-                pr="5px"
-              >
-                <MenuGroup title='添加到文件' fontSize="12px" fontWeight="300">
-                  <MenuItem icon={<UploadOne/>} rounded="md">
-                    <Box fontSize="14px" fontWeight="400">
-                      上传文件
-                    </Box>
-                  </MenuItem>
-                  <MenuItem icon={<FolderPlus/>} rounded="md">
-                    <Box fontSize="14px" fontWeight="400">
-                      新建文件夹
-                    </Box>
-                  </MenuItem>
-                </MenuGroup>
-              </MenuList>
+            <MenuList
+              display="flex"
+              flexDirection="column"
+              alignContent="flex-start"
+              minW="167px"
+              bg={useColorModeValue('white', 'rgb(49, 49, 54)')}
+              border="none"
+              pl="5px"
+              pr="5px"
+            >
+              <MenuGroup title="添加到文件" fontSize="12px" fontWeight="300">
+                <MenuItem icon={<UploadOne/>} rounded="md">
+                  <Box fontSize="14px" fontWeight="400">
+                    上传文件
+                  </Box>
+                </MenuItem>
+                <MenuItem icon={<FolderPlus/>} rounded="md">
+                  <Box fontSize="14px" fontWeight="400">
+                    新建文件夹
+                  </Box>
+                </MenuItem>
+              </MenuGroup>
+            </MenuList>
           </Menu>
         </HStack>
-        <Box
+        <HStack
+          h="28px"
+          pr="40px"
+          spacing="12px"
         >
-          Top
-        </Box>
+          <Checkbox/>
+          <Text
+            fontSize="12px"
+            lineHeight="1.6"
+            fontWeight="500"
+          >
+            共37项
+          </Text>
+          <Spacer/>
+          <Menu>
+            <MenuButton
+              as={Button}
+              aria-label="Options"
+              rounded="md"
+              fontSize="12"
+              fontWeight="300"
+              lineHeight="1.6"
+              variant="ghost"
+              size="xs"
+              leftIcon={<SortTwo/>}
+            >
+              按修改时间排序
+            </MenuButton>
+            <MenuList
+              display="flex"
+              flexDirection="column"
+              alignContent="flex-start"
+              minW="167px"
+              bg={useColorModeValue('white', 'rgb(49, 49, 54)')}
+              border="none"
+              pl="5px"
+              pr="5px"
+            >
+              <MenuOptionGroup defaultValue="update-time">
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="name" rounded="md"
+                                fontSize="14">名称</MenuItemOption>
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="create-time" rounded="md"
+                                fontSize="14">创建时间</MenuItemOption>
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="update-time" rounded="md"
+                                fontSize="14">修改时间</MenuItemOption>
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="size" rounded="md"
+                                fontSize="14">文件大小</MenuItemOption>
+              </MenuOptionGroup>
+              <MenuDivider color={useColorModeValue('', 'rgba(132, 133, 141, 0.12)')} ml="4px" mr="4px"/>
+              <MenuOptionGroup defaultValue="down">
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="up" rounded="md"
+                                fontSize="14">升序</MenuItemOption>
+                <MenuItemOption icon={<Check fill="rgb(97, 122, 250)" size="1rem"/>} value="down" rounded="md"
+                                fontSize="14">降序</MenuItemOption>
+              </MenuOptionGroup>
+            </MenuList>
+          </Menu>
+          <IconButton
+            aria-label={'layout'}
+            rounded="md"
+            size="xs"
+            variant="ghost"
+            icon={<HamburgerIcon/>}
+          />
+          {/*<AllApplication theme="outline" size="14" fill="#000000"/>*/}
+        </HStack>
       </Flex>
       {/* <FileBreadCrumb/>
       <Box
