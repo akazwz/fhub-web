@@ -8,10 +8,11 @@ import {
   MenuList,
   MenuItem,
   MenuButton,
-  useDisclosure,
+  useDisclosure, useColorModeValue, Flex, Spacer, Divider, Text, HStack, IconButton, background, MenuGroup,
 } from '@chakra-ui/react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { FolderPlus, Refresh, UploadOne } from '@icon-park/react'
+import { AddIcon, SearchIcon } from '@chakra-ui/icons'
+import { FolderPlus, Refresh, Search, UploadOne } from '@icon-park/react'
 import Lightbox from 'react-image-lightbox'
 import { Layout } from '../../components/layout'
 import FileCard, { CloudFile, getFileExtension, isImageFile, isVideoFile } from '../../components/file/FileCard'
@@ -23,6 +24,8 @@ import { GetFileList, GetFileURI } from '../../src/api/file'
 import { prefixDirState, shouldGetFileListState } from '../../src/state/file'
 import { FileListSkeleton } from '../../components/file/FileListSkeleton'
 import 'react-image-lightbox/style.css'
+import { NavItems } from '../../components/layout/sidebar/NavItems'
+import UserProfileSideBar from '../../components/layout/sidebar/UserProfileSideBar'
 
 const Index: NextPage = () => {
   const { token } = useAuth()
@@ -96,9 +99,72 @@ const Index: NextPage = () => {
 
   return (
     <Layout>
-      <FileOptionBar/>
-      <Box minH={'75vh'} onContextMenu={handleContextMenu}>
-        <FileBreadCrumb/>
+      <Flex
+        direction="column"
+        h="full"
+        transition="all .3s ease"
+      >
+        <HStack h="40px" mb="24px" spacing="24px" pr="16px">
+          <FileBreadCrumb/>
+          <Spacer/>
+          <IconButton
+            aria-label={'search'}
+            rounded="full"
+            variant="ghost"
+            size="sm"
+            icon={<SearchIcon fontSize="1rem"/>}
+          />
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              aria-label="Options"
+              rounded="full"
+              variant="ghost"
+              size="sm"
+              _hover={{ backgroundColor: useColorModeValue('blue.100', 'linear-gradient(320.88deg, #446dff 0%, rgba(99, 125, 255, 0.75) 100%)') }}
+              bg="linear-gradient(129.12deg, #365bde 0%, #526efa 100%)"
+              icon={<AddIcon fontSize="1rem"/>}
+            />
+              <MenuList
+                display="flex"
+                flexDirection="column"
+                alignContent="flex-start"
+                minW="167px"
+                bg={useColorModeValue('white', 'rgb(49, 49, 54)')}
+                border="none"
+                pl="5px"
+                pr="5px"
+              >
+                <MenuGroup title='添加到文件' fontSize="12px" fontWeight="300">
+                  <MenuItem icon={<UploadOne/>} rounded="md">
+                    <Box fontSize="14px" fontWeight="400">
+                      上传文件
+                    </Box>
+                  </MenuItem>
+                  <MenuItem icon={<FolderPlus/>} rounded="md">
+                    <Box fontSize="14px" fontWeight="400">
+                      新建文件夹
+                    </Box>
+                  </MenuItem>
+                </MenuGroup>
+              </MenuList>
+          </Menu>
+        </HStack>
+        <Box
+        >
+          Top
+        </Box>
+      </Flex>
+      {/* <FileBreadCrumb/>
+      <Box
+        onContextMenu={handleContextMenu}
+        overflow={'scroll'}
+        overflowX="hidden"
+        css={{
+          '&::-webkit-scrollbar': {
+          },
+        }}
+      >
         {isFileListLoading
           ? <FileListSkeleton/>
           : <Grid
@@ -118,7 +184,7 @@ const Index: NextPage = () => {
         }
       </Box>
       <MobileFileOption/>
-      {/* context menu */}
+       context menu
       <Menu isOpen={isOpen} offset={pos} onClose={onClose}>
         <MenuButton position={'absolute'} top={0} left={0}/>
         <MenuList>
@@ -138,7 +204,7 @@ const Index: NextPage = () => {
           />
         )
         : null
-      }
+      }*/}
     </Layout>
   )
 }

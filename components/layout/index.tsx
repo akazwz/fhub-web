@@ -35,7 +35,16 @@ export const Layout = ({ children }: IProps) => {
     : <LayoutIconRight width={'30px'} height={'42px'} onClick={onOpen}/>
 
   return (
-    <Box minH="100vh" bg={bg}>
+    <Box
+      h="100vh"
+      bg={bg}
+      overflow="scroll"
+      css={{
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
+    >
       <Sidebar isOpen={isOpen}/>
       <Flex
         transition="all .3s ease"
