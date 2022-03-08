@@ -31,8 +31,8 @@ export const Layout = ({ children }: IProps) => {
   }
 
   const hoverIcon = isOpen
-    ? <LayoutIconLeft width={'30px'} height={'42px'} onClick={onClose}/>
-    : <LayoutIconRight width={'30px'} height={'42px'} onClick={onOpen}/>
+    ? <LayoutIconLeft width={'24px'} height={'42px'} onClick={onClose}/>
+    : <LayoutIconRight width={'24px'} height={'42px'} onClick={onOpen}/>
 
   return (
     <Box
@@ -52,7 +52,6 @@ export const Layout = ({ children }: IProps) => {
         pos="fixed"
         h="full"
         left={isOpen ? '240px' : 0}
-        w="30px"
       >
         <Box
           onMouseEnter={() => {setIsHover(true)}}
@@ -60,7 +59,7 @@ export const Layout = ({ children }: IProps) => {
         >
           {isHover
             ? hoverIcon
-            : <LayoutIcon width={'30px'} height={'42px'}/>
+            : <LayoutIcon width={'24px'} height={'42px'}/>
           }
         </Box>
       </Flex>

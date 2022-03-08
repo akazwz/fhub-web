@@ -1,4 +1,9 @@
-import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import { useRecoilState } from 'recoil'
 import { prefixDirState } from '../../src/state/file'
@@ -27,7 +32,7 @@ export const FileBreadCrumb = () => {
                 textDecoration: 'none'
               }}
             >
-              <Box fontSize="lg" fontWeight="600" lineHeight="1.4">
+              <Box fontSize="lg" fontWeight="600" lineHeight="1.4" whiteSpace="nowrap">
                 {folder}
               </Box>
             </BreadcrumbLink>
