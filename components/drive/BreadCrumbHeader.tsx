@@ -8,13 +8,16 @@ import {
   MenuGroup,
   IconButton,
   MenuButton,
-  useColorModeValue,
+  useColorModeValue, useDisclosure,
 } from '@chakra-ui/react'
 import { AddIcon, SearchIcon } from '@chakra-ui/icons'
 import { FolderPlus, UploadOne } from '@icon-park/react'
 import { FileBreadCrumb } from '../file/FileBreadCrumb'
+import CreateFolderModel from './CreateFolderModel'
 
 const BreadCrumbHeader = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   return (
     <HStack h="40px" mb="24px" spacing="24px" pr="40px">
       <FileBreadCrumb/>
@@ -53,7 +56,7 @@ const BreadCrumbHeader = () => {
                   上传文件
                 </Box>
               </MenuItem>
-              <MenuItem icon={<FolderPlus/>} rounded="md">
+              <MenuItem icon={<FolderPlus/>} rounded="md" onClick={onOpen}>
                 <Box fontSize="14px" fontWeight="400">
                   新建文件夹
                 </Box>
@@ -61,6 +64,7 @@ const BreadCrumbHeader = () => {
             </MenuGroup>
           </MenuList>
         </Menu>
+        <CreateFolderModel isOpen={isOpen} onClose={onClose}/>
       </Box>
     </HStack>
   )
