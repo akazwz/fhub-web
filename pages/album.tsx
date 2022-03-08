@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import { Layout } from '../components/layout'
 
-const Video: NextPage = () => {
+const Album: NextPage = () => {
   return (
     <Layout>
-      Video
+      album
     </Layout>
   )
 }
 
-export default Video
+export default Album

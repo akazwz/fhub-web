@@ -43,7 +43,7 @@ export const Layout = ({ children }: IProps) => {
         pos="fixed"
         h="full"
         left={isOpen ? '240px' : 0}
-        w={'30px'}
+        w="30px"
       >
         <Box
           onMouseEnter={() => {setIsHover(true)}}
@@ -61,8 +61,9 @@ export const Layout = ({ children }: IProps) => {
           transition="all .3s ease"
           ml={isOpen ? '240px' : 0}
           bg={bg}
-          h={'100vh'}
-          p={'28px'}
+          h="100vh"
+          pt="28px"
+          pl="40px"
         >
           {children}
         </Box>

@@ -16,8 +16,8 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: '文件', routeName: 'file', iconName: 'FileSuccess' },
-  { name: '相册', routeName: 'video', iconName: 'Picture' },
+  { name: '文件', routeName: 'drive', iconName: 'FileSuccess' },
+  { name: '相册', routeName: 'album', iconName: 'Picture' },
   { name: '收藏夹', routeName: 'image', iconName: 'Like' },
   { name: '保险箱', routeName: 'music', iconName: 'Strongbox' },
   { name: '订阅', routeName: 'star', iconName: 'Rss' },
