@@ -80,23 +80,23 @@ const isTextFile = (fileName: string): boolean => {
 const ImageSrc = (fileName: string): string => {
   switch (true) {
     case isVideoFile(fileName):
-      return 'https:img.hellozwz.com/video.png'
+      return 'https://img.hellozwz.com/video.png'
     case isAudioFile(fileName):
-      return 'https:img.hellozwz.com/audio.png'
+      return 'https://img.hellozwz.com/audio.png'
     case isImageFile(fileName):
-      return 'https:img.hellozwz.com/image.png'
+      return 'https://img.hellozwz.com/image.png'
     case isDocFile(fileName):
-      return 'https:img.hellozwz.com/other.png'
+      return 'https://img.hellozwz.com/other.png'
     case isExcelFile(fileName):
-      return 'https:img.hellozwz.com/xls.png'
+      return 'https://img.hellozwz.com/xls.png'
     case isPptFile(fileName):
-      return 'https:img.hellozwz.com/other.png'
+      return 'https://img.hellozwz.com/other.png'
     case isPdfFile(fileName):
-      return 'https:img.hellozwz.com/other.png'
+      return 'https://img.hellozwz.com/other.png'
     case isTextFile(fileName):
-      return 'https:img.hellozwz.com/txt.png'
+      return 'https://img.hellozwz.com/txt.png'
     default:
-      return 'https:img.hellozwz.com/other.png'
+      return 'https://img.hellozwz.com/other.png'
   }
 }
 
