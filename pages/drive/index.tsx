@@ -129,8 +129,8 @@ const Index: NextPage = () => {
           position="relative"
           overflow="hidden"
           flexGrow={1}
+          display="none"
         >
-          {/* dropdown */}
           <HStack pl="32px" pr="32px" fontSize="12px" h="40px" whiteSpace="nowrap">
             <Flex minW="160px" ml="32px" fontWeight="200" flexGrow={1}>
               <Text>
@@ -149,6 +149,60 @@ const Index: NextPage = () => {
             </Flex>
           </HStack>
         </Box>
+
+        {/* node list */}
+
+        <Box
+          position="relative"
+          maxHeight="100%"
+          height="100%"
+          overflow="hidden"
+        >
+          {/* grid scroll */}
+          <Box
+            position="relative"
+            w="100%"
+            h="100%"
+            overflow="auto"
+          >
+            <Box
+              onContextMenu={handleContextMenu}
+              /*overflowY={'scroll'}
+              h="100%"
+              css={{
+                '&::-webkit-scrollbar': {
+                },
+              }}*/
+            >
+              {isFileListLoading
+                ? <FileListSkeleton/>
+                : <Grid
+
+                  position="relative"
+                  maxHeight="100%"
+                  height="100%"
+                  overflow="hidden"
+                  templateColumns={'repeat(auto-fill, minmax(215px, 1fr))'}
+                  autoRows={'minmax(215px, auto)'}
+                  paddingLeft="40px"
+                  paddingRight="40px"
+                >
+                  {fileList.map((file, index) => (
+                    <FileCard
+                      key={'file-card-' + index}
+                      cloudFile={file}
+                      onClick={handleFileCardClick}
+                    />
+                  ))}
+                </Grid>
+              }
+            </Box>
+          </Box>
+
+        </Box>
+
+
+
       </Flex>
       {/*<Flex
         flexDirection="column"

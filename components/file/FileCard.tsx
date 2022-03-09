@@ -2,9 +2,10 @@ import { ReactElement } from 'react'
 import {
   Box,
   Text,
+  Flex,
   VStack,
   Tooltip,
-  useColorModeValue,
+  useColorModeValue, Image, Center,
 } from '@chakra-ui/react'
 import { VideoIcon } from './icons/VideoIcon'
 import { MusicIcon } from './icons/MusicIcon'
@@ -88,26 +89,26 @@ const isTextFile = (fileName: string): boolean => {
   return textExtensions.indexOf(ext) !== -1
 }
 
-const fileIcon = (fileName: string): ReactElement => {
+const ImageSrc = (fileName: string): string => {
   switch (true) {
     case isVideoFile(fileName):
-      return <VideoIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/video.png'
     case isAudioFile(fileName):
-      return <MusicIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/audio.png'
     case isImageFile(fileName):
-      return <ImageIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/image.png'
     case isDocFile(fileName):
-      return <DocIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/other.png'
     case isExcelFile(fileName):
-      return <ExcelIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/xls.png'
     case isPptFile(fileName):
-      return <PptIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/other.png'
     case isPdfFile(fileName):
-      return <PdfIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/other.png'
     case isTextFile(fileName):
-      return <TextIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/txt.png'
     default:
-      return <OtherIcon fontSize={37}/>
+      return 'https:img.hellozwz.com/other.png'
   }
 }
 
@@ -164,27 +165,65 @@ const fileSize = (size: number) => {
 }
 
 const FileCard = (fileItem: FileItem) => {
+  const bg = useColorModeValue('', 'rgba(132,133,141,0.12)')
   return (
-    <Box
-      w="100px"
-      bg={useColorModeValue('blue.100', 'blue.900')}
-      rounded="md"
-      p="2"
+    <Flex
+      w="215px"
+      h="207px"
+      mb="12px"
+      mx="auto"
       onClick={() => {fileItem.onClick(fileItem.cloudFile)}}
     >
       {fileItem.cloudFile.file
-        ? <VStack spacing={1}>
-          {fileIcon(fileItem.cloudFile.file_name)}
-          {fileName(fileItem.cloudFile.file_name)}
-          {fileSize(fileItem.cloudFile.size)}
-        </VStack>
+        ? <Flex
+          w="123px"
+          h="162.19px"
+          _hover={{
+            bg: bg,
+          }}
+          rounded="lg"
+          flexDirection="column"
+          mx="auto"
+          pt="10px"
+        >
+          <Image
+            alt="folder"
+            src={ImageSrc(fileItem.cloudFile.file_name)}
+            w="70px"
+            h="70px"
+            mx="auto"
+            mb="10px"
+          />
+          <Text textAlign="center" fontSize="14px">
+            {folderName(fileItem.cloudFile.file_name)}
+          </Text>
+        </Flex>
         :
-        <VStack spacing={3}>
-          <FolderIcon fontSize={55}/>
-          {folderName(fileItem.cloudFile.file_name)}
-        </VStack>
+        <Flex
+          w="123px"
+          h="162.19px"
+          _hover={{
+            bg: bg,
+          }}
+          rounded="lg"
+          flexDirection="column"
+          mx="auto"
+          pt="10px"
+        >
+          <Image
+            alt="folder"
+            src="https://img.hellozwz.com/folder.png"
+            w="115px"
+            h="90px"
+            mx="auto"
+            mb="10px"
+          />
+          <Text textAlign="center" fontSize="14px">
+            {folderName(fileItem.cloudFile.file_name)}
+          </Text>
+        </Flex>
       }
-    </Box>
+    </Flex>
   )
 }
 
