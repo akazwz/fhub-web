@@ -69,9 +69,7 @@ export const Layout = ({ children }: IProps) => {
           transition="all .3s ease"
           ml={isOpen ? '240px' : 0}
           bg={bg}
-          h="100vh"
-          pt="28px"
-          pl="40px"
+          h="full"
         >
           {children}
         </Box>

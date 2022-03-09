@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { AddIcon, SearchIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { FolderPlus, Check, SortThree, SortTwo, UploadOne } from '@icon-park/react'
+import { CloudStorage, FolderPlus, Refresh, SortThree, SortTwo, UploadOne } from '@icon-park/react'
 import Lightbox from 'react-image-lightbox'
 import { Layout } from '../../components/layout'
 import FileCard, { CloudFile, getFileExtension, isImageFile, isVideoFile } from '../../components/file/FileCard'
@@ -110,66 +110,116 @@ const Index: NextPage = () => {
     })
   }
 
+  const SidebarTop = () => {
+    return (
+      <Flex
+        alignItems="center"
+        mx="24px"
+        w="200px"
+        pt="36px"
+        pb="36px"
+        justifyContent="space-between"
+      >
+        <HStack
+          spacing={3}
+          h="24px"
+        >
+          <CloudStorage
+            theme="two-tone"
+            size="21px"
+            fill={[useColorModeValue('black', 'white'), '#2F88FF']
+            }
+          />
+          <Text
+            bgGradient="linear(to-r,  #FF0080, #00B0FF)"
+            bgClip="text"
+            fontSize="21px"
+            fontWeight="extrabold"
+          >
+            FHub
+          </Text>
+        </HStack>
+      </Flex>
+    )
+  }
+
   return (
     <Layout>
-      <Flex
-        direction="column"
-        h="full"
+      <Box
         transition="all .3s ease"
+        bg={useColorModeValue('white', 'rgb(34, 34, 38)')}
+        w="100%"
+        h="full"
+        pt="28px"
+      >
+        <Flex
+          direction="column"
+          h="full"
+        >
+          <BreadCrumbHeader/>
+          <FileOptionLayoutBar/>
+          <Spacer/>
+          <Divider/>
+          <UserProfileSideBar/>
+        </Flex>
+      </Box>
+      {/*<Box
+        transition="all .3s ease"
+        bg="red.500"
+        pl={"40px"}
+        h="100%"
       >
         <BreadCrumbHeader/>
         <FileOptionLayoutBar/>
-      </Flex>
-      {/* <FileBreadCrumb/>
-      <Box
-        onContextMenu={handleContextMenu}
-        overflow={'scroll'}
-        overflowX="hidden"
-        css={{
-          '&::-webkit-scrollbar': {
-          },
-        }}
-      >
-        {isFileListLoading
-          ? <FileListSkeleton/>
-          : <Grid
-            templateColumns={'repeat(auto-fill, minmax(100px, 1fr))'}
-            autoRows={'minmax(100px, auto)'}
-            gap="3"
-            padding="3"
-          >
-            {fileList.map((file, index) => (
-              <FileCard
-                key={'file-card-' + index}
-                cloudFile={file}
-                onClick={handleFileCardClick}
-              />
-            ))}
-          </Grid>
+        <Box
+          onContextMenu={handleContextMenu}
+          overflowY={'scroll'}
+          h="100%"
+          css={{
+            '&::-webkit-scrollbar': {
+            },
+          }}
+        >
+          {isFileListLoading
+            ? <FileListSkeleton/>
+            : <Grid
+              templateColumns={'repeat(auto-fill, minmax(100px, 1fr))'}
+              autoRows={'minmax(100px, auto)'}
+              gap="3"
+              padding="3"
+            >
+              {fileList.map((file, index) => (
+                <FileCard
+                  key={'file-card-' + index}
+                  cloudFile={file}
+                  onClick={handleFileCardClick}
+                />
+              ))}
+            </Grid>
+          }
+        </Box>
+        <MobileFileOption/>
+        <Menu isOpen={isOpen} offset={pos} onClose={onClose}>
+          <MenuButton position={'absolute'} top={0} left={0}/>
+          <MenuList>
+            <MenuItem icon={<UploadOne/>}>Upload File</MenuItem>
+            <MenuItem icon={<FolderPlus/>}>New Folder</MenuItem>
+            <MenuItem icon={<Refresh/>}>Refresh</MenuItem>
+          </MenuList>
+        </Menu>
+        {isImageLightBoxOpen
+          ? (
+            <Lightbox
+              mainSrc={imageSrc}
+              onCloseRequest={() => {
+                setIsImageLightBoxOpen(false)
+                setImageSrc('')
+              }}
+            />
+          )
+          : null
         }
-      </Box>
-      <MobileFileOption/>
-       context menu
-      <Menu isOpen={isOpen} offset={pos} onClose={onClose}>
-        <MenuButton position={'absolute'} top={0} left={0}/>
-        <MenuList>
-          <MenuItem icon={<UploadOne/>}>Upload File</MenuItem>
-          <MenuItem icon={<FolderPlus/>}>New Folder</MenuItem>
-          <MenuItem icon={<Refresh/>}>Refresh</MenuItem>
-        </MenuList>
-      </Menu>
-      {isImageLightBoxOpen
-        ? (
-          <Lightbox
-            mainSrc={imageSrc}
-            onCloseRequest={() => {
-              setIsImageLightBoxOpen(false)
-              setImageSrc('')
-            }}
-          />
-        )
-        : null
-      }*/}
+      </Box>*/}
     </Layout>
   )
 }

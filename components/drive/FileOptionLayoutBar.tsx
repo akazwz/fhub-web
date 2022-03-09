@@ -42,6 +42,7 @@ const FileOptionLayoutBar = () => {
   return (
     <HStack
       h="28px"
+      pl="40px"
       pr="40px"
     >
       <Checkbox/>
