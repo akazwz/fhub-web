@@ -121,6 +121,10 @@ const Index: NextPage = () => {
         flexDirection="column"
         alignItems="stretch"
         justifyContent="flex-start"
+        css={{
+          '&::-webkit-scrollbar': {
+          },
+        }}
       >
         <BreadCrumbHeader/>
         <FileOptionLayoutBar/>
@@ -149,9 +153,7 @@ const Index: NextPage = () => {
             </Flex>
           </HStack>
         </Box>
-
         {/* node list */}
-
         <Box
           position="relative"
           maxHeight="100%"
@@ -167,17 +169,10 @@ const Index: NextPage = () => {
           >
             <Box
               onContextMenu={handleContextMenu}
-              /*overflowY={'scroll'}
-              h="100%"
-              css={{
-                '&::-webkit-scrollbar': {
-                },
-              }}*/
             >
               {isFileListLoading
                 ? <FileListSkeleton/>
                 : <Grid
-
                   position="relative"
                   maxHeight="100%"
                   height="100%"
@@ -198,11 +193,7 @@ const Index: NextPage = () => {
               }
             </Box>
           </Box>
-
         </Box>
-
-
-
       </Flex>
       {/*<Flex
         flexDirection="column"

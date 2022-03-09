@@ -1,22 +1,10 @@
-import { ReactElement } from 'react'
 import {
-  Box,
   Text,
   Flex,
-  VStack,
+  Image,
   Tooltip,
-  useColorModeValue, Image, Center,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { VideoIcon } from './icons/VideoIcon'
-import { MusicIcon } from './icons/MusicIcon'
-import { ImageIcon } from './icons/ImageIcon'
-import { DocIcon } from './icons/DocIcon'
-import { ExcelIcon } from './icons/ExcelIcon'
-import { PptIcon } from './icons/PptIcon'
-import { PdfIcon } from './icons/PdfIcon'
-import { TextIcon } from './icons/TextIcon'
-import { OtherIcon } from './icons/OtherIcon'
-import { FolderIcon } from './icons/FolderIcon'
 
 export interface FileItem {
   cloudFile: CloudFile,
@@ -124,7 +112,7 @@ const fileName = (fileName: string) => {
   }
   return (
     <Tooltip label={fileName}>
-      <Text fontSize={'smaller'}>
+      <Text fontSize="14px" textAlign="center">
         {showName}
       </Text>
     </Tooltip>
@@ -192,11 +180,9 @@ const FileCard = (fileItem: FileItem) => {
             w="70px"
             h="70px"
             mx="auto"
-            mb="10px"
+            mb="30px"
           />
-          <Text textAlign="center" fontSize="14px">
-            {folderName(fileItem.cloudFile.file_name)}
-          </Text>
+          {fileName(fileItem.cloudFile.file_name)}
         </Flex>
         :
         <Flex
