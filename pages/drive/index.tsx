@@ -4,39 +4,20 @@ import { useRouter } from 'next/router'
 import {
   Box,
   Grid,
-  Menu,
-  MenuList,
-  MenuItem,
-  MenuButton,
-  useDisclosure,
-  useColorModeValue,
   Flex,
-  Spacer,
-  Divider,
   Text,
   HStack,
-  IconButton,
-  background,
-  MenuGroup,
-  Radio,
-  Checkbox, Button, MenuOptionGroup, MenuItemOption, MenuDivider,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { AddIcon, SearchIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { CloudStorage, FolderPlus, Refresh, SortThree, SortTwo, UploadOne } from '@icon-park/react'
 import Lightbox from 'react-image-lightbox'
 import { Layout } from '../../components/layout'
-import FileCard, { CloudFile, getFileExtension, isImageFile, isVideoFile } from '../../components/file/FileCard'
-import { FileOptionBar } from '../../components/file/FileOptionBar'
-import { FileBreadCrumb } from '../../components/file/FileBreadCrumb'
-import { MobileFileOption } from '../../components/file/MobileFileOption'
+import FileCard, { CloudFile, isImageFile } from '../../components/file/FileCard'
 import { useAuth } from '../../src/hooks/useAuth'
 import { GetFileList, GetFileURI } from '../../src/api/file'
 import { prefixDirState, shouldGetFileListState } from '../../src/state/file'
 import { FileListSkeleton } from '../../components/file/FileListSkeleton'
 import 'react-image-lightbox/style.css'
-import { NavItems } from '../../components/layout/sidebar/NavItems'
-import UserProfileSideBar from '../../components/layout/sidebar/UserProfileSideBar'
 import BreadCrumbHeader from '../../components/drive/BreadCrumbHeader'
 import FileOptionLayoutBar from '../../components/drive/FileOptionLayoutBar'
 
@@ -122,12 +103,11 @@ const Index: NextPage = () => {
         alignItems="stretch"
         justifyContent="flex-start"
         css={{
-          '&::-webkit-scrollbar': {
-          },
+          '&::-webkit-scrollbar': {},
         }}
       >
         <BreadCrumbHeader/>
-        <FileOptionLayoutBar/>
+        <FileOptionLayoutBar count={fileList.length}/>
         {/* node list */}
         <Box
           position="relative"
@@ -193,6 +173,18 @@ const Index: NextPage = () => {
               }
             </Box>
           </Box>
+          {isImageLightBoxOpen
+            ? (
+              <Lightbox
+                mainSrc={imageSrc}
+                onCloseRequest={() => {
+                  setIsImageLightBoxOpen(false)
+                  setImageSrc('')
+                }}
+              />
+            )
+            : null
+          }
         </Box>
       </Flex>
       {/*<Flex

@@ -18,7 +18,11 @@ import {
 } from '@chakra-ui/react'
 import { Check, SortTwo, AllApplication, HamburgerButton } from '@icon-park/react'
 
-const FileOptionLayoutBar = () => {
+interface InterfaceFileOption {
+  count: number
+}
+
+const FileOptionLayoutBar = (props: InterfaceFileOption) => {
   const [sortBy, setSortBy] = useState<string>('updatedAt')
   const [sort, setSort] = useState<string>('down')
   const [viewLayout, setViewLayout] = useState<string>('list')
@@ -53,7 +57,7 @@ const FileOptionLayoutBar = () => {
         fontWeight="500"
         whiteSpace="nowrap"
       >
-        共37项
+        共{props.count}项
       </Text>
       <Spacer/>
       <HStack>

@@ -1,4 +1,4 @@
-import { Box, Grid, Skeleton } from '@chakra-ui/react'
+import { Flex, Center, Skeleton, Spinner } from '@chakra-ui/react'
 
 export const FileListSkeleton = () => {
   const lists = []
@@ -8,8 +8,13 @@ export const FileListSkeleton = () => {
     )
   }
   return (
-    <Box>
-      <Grid
+    <Center
+      w="100%"
+      h="40vh"
+      alignItems="center"
+      justifyContent="center"
+    >
+      {/*<Grid
         templateColumns={'repeat(auto-fill, minmax(215px, 1fr))'}
         autoRows={'minmax(215px, auto)'}
         overflow="hidden"
@@ -17,7 +22,8 @@ export const FileListSkeleton = () => {
         paddingRight="40px"
       >
         {lists}
-      </Grid>
-    </Box>
+      </Grid>*/}
+      {/*<Spinner size="lg"/>*/}
+    </Center>
   )
 }
