@@ -44,6 +44,7 @@ const FileOptionLayoutBar = () => {
       h="28px"
       pl="40px"
       pr="40px"
+      mb="12px"
     >
       <Checkbox/>
       <Text

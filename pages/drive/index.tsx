@@ -110,39 +110,6 @@ const Index: NextPage = () => {
     })
   }
 
-  const SidebarTop = () => {
-    return (
-      <Flex
-        alignItems="center"
-        mx="24px"
-        w="200px"
-        pt="36px"
-        pb="36px"
-        justifyContent="space-between"
-      >
-        <HStack
-          spacing={3}
-          h="24px"
-        >
-          <CloudStorage
-            theme="two-tone"
-            size="21px"
-            fill={[useColorModeValue('black', 'white'), '#2F88FF']
-            }
-          />
-          <Text
-            bgGradient="linear(to-r,  #FF0080, #00B0FF)"
-            bgClip="text"
-            fontSize="21px"
-            fontWeight="extrabold"
-          >
-            FHub
-          </Text>
-        </HStack>
-      </Flex>
-    )
-  }
-
   return (
     <Layout>
       {/* page content */}
@@ -157,6 +124,31 @@ const Index: NextPage = () => {
       >
         <BreadCrumbHeader/>
         <FileOptionLayoutBar/>
+        {/* node list */}
+        <Box
+          position="relative"
+          overflow="hidden"
+          flexGrow={1}
+        >
+          {/* dropdown */}
+          <HStack pl="32px" pr="32px" fontSize="12px" h="40px" whiteSpace="nowrap">
+            <Flex minW="160px" ml="32px" fontWeight="200" flexGrow={1}>
+              <Text>
+                名称
+              </Text>
+            </Flex>
+            <Flex w="200px" fontWeight="200" pl="24px">
+              <Text>
+                修改时间
+              </Text>
+            </Flex>
+            <Flex w="160px" fontWeight="200" pl="24px">
+              <Text>
+                大小
+              </Text>
+            </Flex>
+          </HStack>
+        </Box>
       </Flex>
       {/*<Flex
         flexDirection="column"
