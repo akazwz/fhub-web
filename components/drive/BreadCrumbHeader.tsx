@@ -1,5 +1,6 @@
 import {
   Box,
+  Flex,
   Menu,
   HStack,
   Spacer,
@@ -19,14 +20,17 @@ import CreateFolderModel from './CreateFolderModel'
 const BreadCrumbHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <HStack
-      h="40px"
-      mb="24px"
-      pr="40px"
-      pl="40px"
+    <Flex
+      height="40px"
+      paddingLeft="40px"
+      paddingRight="40px"
+      alignItems="center"
+      marginBottom="24px"
+      justifyContent="space-between"
+      whiteSpace="nowrap"
+      flexShrink={0}
     >
       <FileBreadCrumb/>
-      <Spacer/>
       <HStack spacing="18px">
         <IconButton
           aria-label={'search'}
@@ -73,7 +77,7 @@ const BreadCrumbHeader = () => {
           <CreateFolderModel isOpen={isOpen} onClose={onClose}/>
         </Box>
       </HStack>
-    </HStack>
+    </Flex>
   )
 }
 

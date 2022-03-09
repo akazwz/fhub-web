@@ -12,7 +12,6 @@ import { NavItems } from './NavItems'
 import UserProfileSideBar from './UserProfileSideBar'
 
 interface SidebarProps extends BoxProps {
-  isOpen: boolean;
 }
 
 const SidebarTop = () => {
@@ -20,7 +19,6 @@ const SidebarTop = () => {
     <Flex
       alignItems="center"
       mx="24px"
-      w="200px"
       pt="36px"
       pb="36px"
       justifyContent="space-between"
@@ -48,12 +46,11 @@ const SidebarTop = () => {
   )
 }
 
-export const Sidebar = ({ isOpen, ...rest }: SidebarProps) => {
+export const Sidebar = ({ ...rest }: SidebarProps) => {
   return (
     <Box
       transition="all .3s ease"
       bg={useColorModeValue('white', 'rgb(34, 34, 38)')}
-      w={isOpen ? '240px' : 0}
       pos="fixed"
       h="full"
       overflow="scroll"

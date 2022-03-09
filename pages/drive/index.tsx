@@ -145,24 +145,25 @@ const Index: NextPage = () => {
 
   return (
     <Layout>
-      <Box
-        transition="all .3s ease"
-        bg={useColorModeValue('white', 'rgb(34, 34, 38)')}
-        w="100%"
-        h="full"
-        pt="28px"
+      {/* page content */}
+      <Flex
+        fontSize="14px"
+        lineHeight="1.5"
+        position="relative"
+        height="100%"
+        flexDirection="column"
+        alignItems="stretch"
+        justifyContent="flex-start"
       >
-        <Flex
-          direction="column"
-          h="full"
-        >
-          <BreadCrumbHeader/>
-          <FileOptionLayoutBar/>
-          <Spacer/>
-          <Divider/>
-          <UserProfileSideBar/>
-        </Flex>
-      </Box>
+        <BreadCrumbHeader/>
+        <FileOptionLayoutBar/>
+      </Flex>
+      {/*<Flex
+        flexDirection="column"
+      >
+        <BreadCrumbHeader/>
+        <FileOptionLayoutBar/>
+      </Flex>*/}
       {/*<Box
         transition="all .3s ease"
         bg="red.500"

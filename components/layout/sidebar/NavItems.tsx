@@ -38,9 +38,9 @@ const NavItem = ({ iconName, routeName, children, ...rest }: NavItemProps) => {
       <Flex
         w="216px"
         alignItems="center"
+        h="44px"
         p="12px"
         mx="12px"
-        mb="1"
         borderRadius="lg"
         role="group"
         cursor="pointer"
