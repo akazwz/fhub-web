@@ -19,6 +19,6 @@
 5. chakra ui (ui lib)
 6. crypto-js (文件hash)
 7. use-hashcode (自己写的哈希计算大文件的 react hook)
-8. qiniu-js (七牛对象存储)
+8. qiniu-js (七牛对象存储和cdn)
 9. react-image-lightbox (图片在线预览)
 10. @icon-park/react (图标)
