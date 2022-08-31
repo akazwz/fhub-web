@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { NextPage } from 'next'
 import {
   Flex,
   Link,
@@ -23,7 +22,7 @@ import { SignInByUsernamePwdAPI } from '../src/api/user'
 import { isRememberState } from '../src/state/user'
 import { useAuth } from '../src/hooks/useAuth'
 
-const Login: NextPage = () => {
+const Login = () => {
   const [isRemember, setIsRemember] = useRecoilState(isRememberState)
 
   const [username, setUsername] = useState<string>('')

@@ -1,12 +1,33 @@
-import type { NextPage } from 'next'
-import { Layout } from '../components/layout'
+import { Grid, GridProps } from '@chakra-ui/react'
 
-const Home: NextPage = () => {
-  return (
-    <Layout>
-      Home
-    </Layout>
-  )
+import { FileCard } from '../lib/filecard'
+
+const FileGrid = (props: GridProps) => {
+	return (
+		<Grid
+			boxSizing="border-box"
+			gridTemplateColumns="repeat(auto-fill, 9rem)"
+			justifyContent="space-between"
+			alignItems="flex-end"
+			{...props}
+		/>
+	)
 }
 
-export default Home
+const FilePage = () => {
+	return (
+		<FileGrid>
+			<FileCard type={'folder'} name={'dog'} size={300} />
+			<FileCard type={'image'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'folder'} name={'dog.png'} size={300} />
+		</FileGrid>
+	)
+}
+
+export default FilePage

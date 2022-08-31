@@ -1,18 +1,11 @@
 import { atom } from 'recoil'
-import { UploadProgress } from 'qiniu-js/esm/upload'
 
-/* record if user choose to remember me checkbox */
 export const prefixDirState = atom<string>({
-  key: 'prefixDir',
-  default: '0/',
+	key: 'prefixDir',
+	default: '/',
 })
 
 export const shouldGetFileListState = atom<number>({
-  key: 'shouldGetFileListState',
-  default: 0,
-})
-
-export const fileUploadProgressState = atom<UploadProgress | null>({
-  key: 'fileUploadProgress',
-  default: null,
+	key: 'shouldGetFileListState',
+	default: 0,
 })

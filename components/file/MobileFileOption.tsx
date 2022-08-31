@@ -9,9 +9,9 @@ import {
 } from '@chakra-ui/react'
 import { useRef } from 'react'
 import { FolderPlus, Plus, UploadOne } from '@icon-park/react'
-import { UploadFileModal } from './UploadFileModal'
+import { UploadModel } from './UploadModel'
 import { CreateFolderModal } from './CreateFolderModal'
-import { UploadFileProgress } from './UploadFileProgress'
+import { UploadProgress } from './UploadProgress'
 
 export const MobileFileOption = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -50,10 +50,10 @@ export const MobileFileOption = () => {
             justifyContent={'center'}
           >
             <HStack spacing={7}>
-              <UploadFileModal/>
+              <UploadModel/>
               <CreateFolderModal/>
             </HStack>
-            <UploadFileProgress/>
+            <UploadProgress/>
           </VStack>
         </DrawerContent>
       </Drawer>
