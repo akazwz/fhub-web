@@ -11,20 +11,22 @@ import { prefixDirState } from '../../src/state/file'
 
 export const FileBreadCrumb = () => {
 	const [prefix, setPrefix] = useRecoilState(prefixDirState)
-	const folders = prefix.slice(1).trim().split('/')
-	folders.unshift('Drive')
+	const folders = prefix.trim().split('/')
 
 	return (
 		<Breadcrumb
-			separator={folders.length === 1 ? <></> : <Right />}
+			separator={folders.length === 2 ? <></> : <Right />}
 			fontWeight="medium"
 			fontSize="md"
 		>
 			{folders.map((folder, index) => {
+				if (folder === '') folder = 'Drive'
 				return (
 					<BreadcrumbItem
 						key={folders.slice(0, index + 1).toString()}
 						onClick={() => {
+							const folder = folders.slice(0, index + 1).join('/') + '/'
+							setPrefix(folder)
 						}}
 					>
 						<BreadcrumbLink

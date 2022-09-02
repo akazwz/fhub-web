@@ -1,9 +1,9 @@
 import React from 'react'
+import { useRecoilState } from 'recoil'
 import { Box, Text, Tooltip } from '@chakra-ui/react'
 
 import { FolderIcon } from '../components/file/icons/FolderIcon'
 import { ImageIcon } from '../components/file/icons/ImageIcon'
-import { useRecoilState } from 'recoil'
 import { prefixDirState } from '../src/state/file'
 
 interface FileProps{
@@ -44,7 +44,7 @@ const Folder = ({ name }: { name: string }) => {
 			mx="auto"
 			overflow="hidden"
 			textAlign="center"
-			onClick={() => setPrefixDir('/dog')}
+			onClick={() => setPrefixDir('/dog/')}
 		>
 			<FolderIcon fontSize="90" />
 			<Tooltip label={name}>
