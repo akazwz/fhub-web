@@ -12,6 +12,7 @@ import {
 	useDisclosure,
 	Drawer,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 import { isMiniState } from '../../src/state'
 import { NavLinks, Sidebar } from './sidebar'
@@ -65,4 +66,12 @@ export const Layout = ({ children }: LayoutProps) => {
 			</Box>
 		</Box>
 	)
+}
+
+export const Layouts = ({ children }: LayoutProps) => {
+	const router = useRouter()
+	if (router.pathname === '/login') {
+		return <>{children}</>
+	}
+	return <Layout>{children}</Layout>
 }

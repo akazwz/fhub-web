@@ -5,6 +5,7 @@ import { Box, Text, Tooltip } from '@chakra-ui/react'
 import { FolderIcon } from '../components/file/icons/FolderIcon'
 import { ImageIcon } from '../components/file/icons/ImageIcon'
 import { prefixDirState } from '../src/state/file'
+import Image from 'next/image'
 
 interface FileProps{
 	type: string
@@ -16,9 +17,9 @@ export const FileCard = (file: FileProps) => {
 	const Content = () => {
 		switch (file.type) {
 			case 'folder':
-				return <Folder name={file.name} />
+				return <FolderCard name={file.name} />
 			case 'image':
-				return <Image name={file.name} size={file.size} />
+				return <ImageCard name={file.name} size={file.size} />
 			default:
 				return <></>
 		}
@@ -29,7 +30,7 @@ export const FileCard = (file: FileProps) => {
 	)
 }
 
-const Folder = ({ name }: { name: string }) => {
+const FolderCard = ({ name }: { name: string }) => {
 	const filename = name.length > 10 ? name.slice(0, 7) + '...' : name
 
 	const [prefixDir, setPrefixDir] = useRecoilState(prefixDirState)
@@ -55,7 +56,7 @@ const Folder = ({ name }: { name: string }) => {
 	)
 }
 
-const Image = ({ name, size }: { name: string, size: number }) => {
+const ImageCard = ({ name, size }: { name: string, size: number }) => {
 	const filename = name.length > 10 ? name.slice(0, 7) + '...' : name
 	return (
 		<Box
@@ -68,7 +69,8 @@ const Image = ({ name, size }: { name: string, size: number }) => {
 			overflow="hidden"
 			textAlign="center"
 		>
-			<ImageIcon fontSize="90" />
+			{/*<ImageIcon fontSize="90" />*/}
+			<Image src={'https://img.pexni.com/dog.png'} objectFit={'contain'} width={100} height={85} draggable={false} />
 			<Tooltip label={name}>
 				<Text fontWeight="500" whiteSpace="nowrap" maxWidth="100px">{filename}</Text>
 			</Tooltip>

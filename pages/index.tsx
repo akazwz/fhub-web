@@ -19,9 +19,9 @@ const FilePage = () => {
 		<FileGrid>
 			<FileCard type={'folder'} name={'dog'} size={300} />
 			<FileCard type={'image'} name={'dog.png'} size={300} />
+			<FileCard type={'image'} name={'dog.png'} size={300} />
 			<FileCard type={'folder'} name={'dog.png'} size={300} />
-			<FileCard type={'folder'} name={'dog.png'} size={300} />
-			<FileCard type={'folder'} name={'dog.png'} size={300} />
+			<FileCard type={'image'} name={'dog.png'} size={300} />
 			<FileCard type={'folder'} name={'dog.png'} size={300} />
 			<FileCard type={'folder'} name={'dog.png'} size={300} />
 			<FileCard type={'folder'} name={'dog.png'} size={300} />
